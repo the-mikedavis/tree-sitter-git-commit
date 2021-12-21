@@ -1,0 +1,35 @@
+{
+  "name": "tree-sitter-gitcommit",
+  "version": "0.0.1",
+  "description": "A tree-sitter grammar for git commit messages",
+  "main": "bindings/node",
+  "scripts": {
+    "test": "tree-sitter test",
+    "format": "prettier --trailing-comma es5 --write grammar.js",
+    "format-check": "prettier --trailing-comma es5 --check grammar.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-mikedavis/tree-sitter-gitcommit.git"
+  },
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "lexer",
+    "git",
+    "commit"
+  ],
+  "author": "the-mikedavis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/the-mikedavis/tree-sitter-gitcommit/issues"
+  },
+  "homepage": "https://github.com/the-mikedavis/tree-sitter-gitcommit#readme",
+  "dependencies": {
+    "nan": "^2.15.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "tree-sitter-cli": "^0.20.1"
+  }
+}

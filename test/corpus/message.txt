@@ -36,3 +36,28 @@ closes #123
   (message (item))
   (comment)
   (comment))
+
+=====================================
+Subject and body collide
+=====================================
+add LICENSE
+closes #123
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+
+---
+
+(source
+  (ERROR (subject) (UNEXPECTED 'l'))
+  (subject)
+  (comment)
+  (comment))
+
+=====================================
+Single-line subject with no terminator
+=====================================
+add LICENSE
+---
+
+(source (subject))

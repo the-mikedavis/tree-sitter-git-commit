@@ -37,7 +37,7 @@ module.exports = grammar({
           NEWLINE,
           repeat($._body_line)
         ),
-        choice($.comment, $.message)
+        choice($.comment, $.subject)
       ),
 
     _body_line: ($) =>

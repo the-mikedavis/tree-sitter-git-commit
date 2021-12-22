@@ -77,9 +77,16 @@ module.exports = grammar({
           "'."
         ),
         seq("HEAD", "detached", "at", $.commit),
+        $.header,
         $.change,
         // fallback to regular comment words if the words are nonsense
         repeat1($._word)
+      ),
+
+    header: ($) =>
+      choice(
+        seq("Conflicts", ":"),
+        seq("Changes", "to", "be", "committed", ":")
       ),
 
     change: ($) =>

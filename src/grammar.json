@@ -323,6 +323,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "header"
+        },
+        {
+          "type": "SYMBOL",
           "name": "change"
         },
         {
@@ -331,6 +335,49 @@
             "type": "SYMBOL",
             "name": "_word"
           }
+        }
+      ]
+    },
+    "header": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "Conflicts"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "Changes"
+            },
+            {
+              "type": "STRING",
+              "value": "to"
+            },
+            {
+              "type": "STRING",
+              "value": "be"
+            },
+            {
+              "type": "STRING",
+              "value": "committed"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
+            }
+          ]
         }
       ]
     },

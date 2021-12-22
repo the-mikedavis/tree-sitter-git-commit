@@ -38,7 +38,7 @@ Changing files
 ---
 
 (source
-  (comment)
+  (comment (header))
   (comment (change (path)))
   (comment (change (path)))
   (comment (change (path) (path)))
@@ -62,3 +62,15 @@ Renamed file with arrow in name
 ---
 
 (source (comment (change (path) (path))))
+
+=====================================
+Merge conflict paths
+=====================================
+# Conflicts:
+#	languages.toml
+
+---
+
+(source
+  (comment (header))
+  (comment))

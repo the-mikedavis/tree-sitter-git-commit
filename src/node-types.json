@@ -56,9 +56,18 @@
         {
           "type": "commit",
           "named": true
+        },
+        {
+          "type": "header",
+          "named": true
         }
       ]
     }
+  },
+  {
+    "type": "header",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "message",
@@ -129,6 +138,14 @@
     "named": false
   },
   {
+    "type": "Changes",
+    "named": false
+  },
+  {
+    "type": "Conflicts",
+    "named": false
+  },
+  {
     "type": "HEAD",
     "named": false
   },
@@ -145,6 +162,10 @@
     "named": false
   },
   {
+    "type": "be",
+    "named": false
+  },
+  {
     "type": "branch",
     "named": true
   },
@@ -155,6 +176,10 @@
   {
     "type": "commit",
     "named": true
+  },
+  {
+    "type": "committed",
+    "named": false
   },
   {
     "type": "date",

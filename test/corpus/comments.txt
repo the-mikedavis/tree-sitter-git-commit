@@ -38,30 +38,42 @@ Changing files
 ---
 
 (source
-  (comment (header))
-  (comment (change (path)))
-  (comment (change (path)))
-  (comment (change (path) (path)))
-  (comment (change (path)))
-  (comment (change (path))))
+  (comment
+    (summary
+      (header)
+      (change (path))
+      (change (path))
+      (change (path) (path))
+      (change (path))
+      (change (path)))))
 
 =====================================
 New file with space in name
 =====================================
+# Changes to be committed:
 #	new file:   file with space.txt
 
 ---
 
-(source (comment (change (path))))
+(source
+  (comment
+    (summary
+      (header)
+      (change (path)))))
 
 =====================================
 Renamed file with arrow in name
 =====================================
+# Changes to be committed:
 #	renamed:    a->b.tx -> a->b.txt
 
 ---
 
-(source (comment (change (path) (path))))
+(source
+  (comment
+    (summary
+      (header)
+      (change (path) (path)))))
 
 =====================================
 Merge conflict paths
@@ -72,8 +84,7 @@ Merge conflict paths
 ---
 
 (source
-  (comment (header))
-  (comment))
+  (comment (summary (header) (path))))
 
 =====================================
 Untracked paths
@@ -84,8 +95,7 @@ Untracked paths
 ---
 
 (source
-  (comment (header))
-  (comment))
+  (comment (summary (header) (path))))
 
 =====================================
 Rebasing branch onto commit

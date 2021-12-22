@@ -14,15 +14,17 @@
 const WHITE_SPACE = /[\t\f\v ]+/;
 const NEWLINE = /\r?\n/;
 const ANYTHING = /[^\n\r]+/;
-const CHANGE = choice("new file", "modified", "renamed", "deleted");
 const PREC = {
   NONSENSE: -1,
-  PATH: 1,
-  PATH_SEPARATOR_ARROW: 2,
-  ITEM: 3,
-  SUBJECT_FIRST_CHAR: 4,
-  SUBJECT: 5,
+  PATH: 5,
+  PATH_SEPARATOR_ARROW: 6,
+  CHANGE: 8,
+  ITEM: 10,
+  SUBJECT_FIRST_CHAR: 15,
+  SUBJECT: 16,
 };
+
+const CHANGE = choice("new file", "modified", "renamed", "deleted");
 
 module.exports = grammar({
   name: "gitcommit",
@@ -63,12 +65,30 @@ module.exports = grammar({
 
     _comment_body: ($) =>
       choice(
+        $.summary,
         $._branch_declaration,
-        $.header,
-        $.change,
         // fallback to regular comment words if the words are nonsense
         repeat1($._word)
       ),
+
+    summary: ($) =>
+      choice(
+        seq(
+          alias($._changes_to_be_committed, $.header),
+          NEWLINE,
+          repeat1(seq("#", $.change, NEWLINE)),
+          optional("#")
+        ),
+        seq(
+          $.header,
+          NEWLINE,
+          repeat1(seq("#", $.path, NEWLINE)),
+          optional("#")
+        )
+      ),
+
+    _changes_to_be_committed: ($) =>
+      seq("Changes", "to", "be", "committed", ":"),
 
     _branch_declaration: ($) =>
       choice(
@@ -103,17 +123,12 @@ module.exports = grammar({
         seq("HEAD", "detached", "at", $.commit)
       ),
 
-    header: ($) =>
-      choice(
-        seq("Conflicts", ":"),
-        seq("Untracked", "files", ":"),
-        seq("Changes", "to", "be", "committed", ":")
-      ),
+    header: ($) => seq(choice("Conflicts", seq("Untracked", "files")), ":"),
 
     change: ($) =>
       seq(
-        field("kind", CHANGE),
-        ":",
+        prec(20, field("kind", CHANGE)),
+        token(prec(PREC.CHANGE, ":")),
         $.path,
         optional(seq(token(prec(PREC.PATH_SEPARATOR_ARROW, "->")), $.path))
       ),

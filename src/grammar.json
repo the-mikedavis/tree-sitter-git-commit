@@ -6,7 +6,7 @@
       "members": [
         {
           "type": "PREC",
-          "value": 5,
+          "value": 16,
           "content": {
             "type": "SEQ",
             "members": [
@@ -147,7 +147,7 @@
           "type": "TOKEN",
           "content": {
             "type": "PREC",
-            "value": 4,
+            "value": 15,
             "content": {
               "type": "PATTERN",
               "value": "[^#\\r\\n]"
@@ -230,15 +230,11 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "summary"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_branch_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "header"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "change"
         },
         {
           "type": "REPEAT1",
@@ -246,6 +242,131 @@
             "type": "SYMBOL",
             "name": "_word"
           }
+        }
+      ]
+    },
+    "summary": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_changes_to_be_committed"
+              },
+              "named": true,
+              "value": "header"
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\r?\\n"
+            },
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "#"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "change"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "\\r?\\n"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "#"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "header"
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\r?\\n"
+            },
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "#"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "path"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "\\r?\\n"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "#"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "_changes_to_be_committed": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "Changes"
+        },
+        {
+          "type": "STRING",
+          "value": "to"
+        },
+        {
+          "type": "STRING",
+          "value": "be"
+        },
+        {
+          "type": "STRING",
+          "value": "committed"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
         }
       ]
     },
@@ -400,62 +521,33 @@
       ]
     },
     "header": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
               "type": "STRING",
               "value": "Conflicts"
             },
             {
-              "type": "STRING",
-              "value": ":"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "Untracked"
+                },
+                {
+                  "type": "STRING",
+                  "value": "files"
+                }
+              ]
             }
           ]
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "Untracked"
-            },
-            {
-              "type": "STRING",
-              "value": "files"
-            },
-            {
-              "type": "STRING",
-              "value": ":"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "Changes"
-            },
-            {
-              "type": "STRING",
-              "value": "to"
-            },
-            {
-              "type": "STRING",
-              "value": "be"
-            },
-            {
-              "type": "STRING",
-              "value": "committed"
-            },
-            {
-              "type": "STRING",
-              "value": ":"
-            }
-          ]
+          "type": "STRING",
+          "value": ":"
         }
       ]
     },
@@ -463,33 +555,44 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "FIELD",
-          "name": "kind",
+          "type": "PREC",
+          "value": 20,
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "new file"
-              },
-              {
-                "type": "STRING",
-                "value": "modified"
-              },
-              {
-                "type": "STRING",
-                "value": "renamed"
-              },
-              {
-                "type": "STRING",
-                "value": "deleted"
-              }
-            ]
+            "type": "FIELD",
+            "name": "kind",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "new file"
+                },
+                {
+                  "type": "STRING",
+                  "value": "modified"
+                },
+                {
+                  "type": "STRING",
+                  "value": "renamed"
+                },
+                {
+                  "type": "STRING",
+                  "value": "deleted"
+                }
+              ]
+            }
           }
         },
         {
-          "type": "STRING",
-          "value": ":"
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 8,
+            "content": {
+              "type": "STRING",
+              "value": ":"
+            }
+          }
         },
         {
           "type": "SYMBOL",
@@ -505,7 +608,7 @@
                   "type": "TOKEN",
                   "content": {
                     "type": "PREC",
-                    "value": 2,
+                    "value": 6,
                     "content": {
                       "type": "STRING",
                       "value": "->"
@@ -550,7 +653,7 @@
         "type": "TOKEN",
         "content": {
           "type": "PREC",
-          "value": 1,
+          "value": 5,
           "content": {
             "type": "PATTERN",
             "value": "\\S+"
@@ -562,7 +665,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 3,
+        "value": 10,
         "content": {
           "type": "PATTERN",
           "value": "#\\d+"

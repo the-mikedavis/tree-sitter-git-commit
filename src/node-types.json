@@ -50,15 +50,11 @@
           "named": true
         },
         {
-          "type": "change",
-          "named": true
-        },
-        {
           "type": "commit",
           "named": true
         },
         {
-          "type": "header",
+          "type": "summary",
           "named": true
         }
       ]
@@ -116,6 +112,29 @@
     "type": "subject",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "summary",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "change",
+          "named": true
+        },
+        {
+          "type": "header",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "#",
@@ -183,11 +202,11 @@
   },
   {
     "type": "branch",
-    "named": true
+    "named": false
   },
   {
     "type": "branch",
-    "named": false
+    "named": true
   },
   {
     "type": "commit",

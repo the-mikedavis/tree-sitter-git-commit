@@ -101,3 +101,54 @@ closes #123
   (comment)
   (message (item))
   (comment))
+
+=====================================
+Real rebase commit body
+=====================================
+add submodule on tree-sitter-rebase, add to languages
+
+# Conflicts:
+#	languages.toml
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# interactive rebase in progress; onto 34766e2
+# Last command done (1 command done):
+#    pick 1bc0b2c add submodule on tree-sitter-rebase, add to languages
+# Next commands to do (5 remaining commands):
+#    pick e339083 add basic highlights query
+#    pick 00c5a26 inject bash in execute statements
+# You are currently rebasing branch 'md-tree-sitter-rebase' on '34766e2'.
+#
+# Changes to be committed:
+#	modified:   .gitmodules
+#	new file:   helix-syntax/languages/tree-sitter-rebase
+#	modified:   languages.toml
+#
+# Untracked files:
+#	COMMIT_EDITMSG
+#
+
+---
+
+(source
+  (subject)
+  (comment (summary (header) (path)))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment (branch) (commit))
+  (comment)
+  (comment
+    (summary (header)
+      (change (path))
+      (change (path))
+      (change (path))))
+  (comment (summary (header) (path))))

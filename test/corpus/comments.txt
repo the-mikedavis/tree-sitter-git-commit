@@ -1,7 +1,6 @@
 =====================================
 Current branch
 =====================================
-
 # On branch main
 
 ---
@@ -11,7 +10,6 @@ Current branch
 =====================================
 Branch is up to date with remote
 =====================================
-
 # Your branch is up to date with 'origin/main'.
 
 ---
@@ -21,7 +19,6 @@ Branch is up to date with remote
 =====================================
 Head detached at commit
 =====================================
-
 # HEAD detached at f5d1c0b8
 
 ---
@@ -31,7 +28,6 @@ Head detached at commit
 =====================================
 Changing files
 =====================================
-
 # Changes to be committed:
 #	deleted:    Cargo.lock
 #	modified:   Cargo.toml
@@ -52,7 +48,6 @@ Changing files
 =====================================
 New file with space in name
 =====================================
-
 #	new file:   file with space.txt
 
 ---
@@ -62,7 +57,6 @@ New file with space in name
 =====================================
 Renamed file with arrow in name
 =====================================
-
 #	renamed:    a->b.tx -> a->b.txt
 
 ---

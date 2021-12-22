@@ -20,6 +20,7 @@ const PREC = {
   PATH_SEPARATOR_ARROW: 6,
   CHANGE: 8,
   ITEM: 10,
+  USER: 11,
   SUBJECT_FIRST_CHAR: 15,
   SUBJECT: 16,
 };
@@ -59,7 +60,11 @@ module.exports = grammar({
         optional(repeat(/[^\r\n]+/))
       ),
 
-    message: ($) => seq(/[^#\s]+/, optional(repeat(choice($.item, $._word)))),
+    message: ($) =>
+      seq(
+        choice($.user, /[^#\s]+/),
+        optional(repeat(choice($.user, $.item, $._word)))
+      ),
 
     comment: ($) => seq("#", optional($._comment_body)),
 
@@ -140,6 +145,7 @@ module.exports = grammar({
 
     path: ($) => repeat1(token(prec(PREC.PATH, /\S+/))),
 
+    user: ($) => token(prec(PREC.USER, /@\S+/)),
     item: ($) => token(prec(PREC.ITEM, /#\d+/)),
   },
 });

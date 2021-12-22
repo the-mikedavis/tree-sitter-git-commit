@@ -175,8 +175,17 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[^#\\s]+"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "user"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[^#\\s]+"
+            }
+          ]
         },
         {
           "type": "CHOICE",
@@ -186,6 +195,10 @@
               "content": {
                 "type": "CHOICE",
                 "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "user"
+                  },
                   {
                     "type": "SYMBOL",
                     "name": "item"
@@ -658,6 +671,17 @@
             "type": "PATTERN",
             "value": "\\S+"
           }
+        }
+      }
+    },
+    "user": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 11,
+        "content": {
+          "type": "PATTERN",
+          "value": "@\\S+"
         }
       }
     },

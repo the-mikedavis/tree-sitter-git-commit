@@ -76,6 +76,10 @@
         {
           "type": "item",
           "named": true
+        },
+        {
+          "type": "user",
+          "named": true
         }
       ]
     }
@@ -202,11 +206,11 @@
   },
   {
     "type": "branch",
-    "named": false
+    "named": true
   },
   {
     "type": "branch",
-    "named": true
+    "named": false
   },
   {
     "type": "commit",
@@ -271,6 +275,10 @@
   {
     "type": "up",
     "named": false
+  },
+  {
+    "type": "user",
+    "named": true
   },
   {
     "type": "with",

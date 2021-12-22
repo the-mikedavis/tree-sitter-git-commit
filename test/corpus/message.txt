@@ -152,3 +152,21 @@ add submodule on tree-sitter-rebase, add to languages
       (change (path))
       (change (path))))
   (comment (summary (header) (path))))
+
+=====================================
+User mention
+=====================================
+add LICENSE
+
+recommended by @my-lawyer
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+
+---
+
+(source
+  (subject)
+  (message (user))
+  (comment)
+  (comment))

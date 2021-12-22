@@ -338,25 +338,29 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "new file"
-            },
-            {
-              "type": "STRING",
-              "value": "modified"
-            },
-            {
-              "type": "STRING",
-              "value": "renamed"
-            },
-            {
-              "type": "STRING",
-              "value": "deleted"
-            }
-          ]
+          "type": "FIELD",
+          "name": "kind",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "new file"
+              },
+              {
+                "type": "STRING",
+                "value": "modified"
+              },
+              {
+                "type": "STRING",
+                "value": "renamed"
+              },
+              {
+                "type": "STRING",
+                "value": "deleted"
+              }
+            ]
+          }
         },
         {
           "type": "STRING",

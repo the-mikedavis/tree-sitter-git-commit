@@ -12,9 +12,9 @@
 #define ALIAS_COUNT 0
 #define TOKEN_COUNT 30
 #define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 0
+#define FIELD_COUNT 1
 #define MAX_ALIAS_SEQUENCE_LENGTH 10
-#define PRODUCTION_ID_COUNT 2
+#define PRODUCTION_ID_COUNT 3
 
 enum {
   aux_sym_source_token1 = 1,
@@ -326,6 +326,24 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = false,
     .named = false,
   },
+};
+
+enum {
+  field_kind = 1,
+};
+
+static const char * const ts_field_names[] = {
+  [0] = NULL,
+  [field_kind] = "kind",
+};
+
+static const TSFieldMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
+  [2] = {.index = 0, .length = 1},
+};
+
+static const TSFieldMapEntry ts_field_map_entries[] = {
+  [0] =
+    {field_kind, 0},
 };
 
 static const TSSymbol ts_alias_sequences[PRODUCTION_ID_COUNT][MAX_ALIAS_SEQUENCE_LENGTH] = {
@@ -1854,13 +1872,13 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [121] = {.entry = {.count = 2, .reusable = false}}, REDUCE(aux_sym__comment_body_repeat1, 2), SHIFT_REPEAT(24),
   [124] = {.entry = {.count = 2, .reusable = true}}, REDUCE(aux_sym_path_repeat1, 2), SHIFT_REPEAT(25),
   [127] = {.entry = {.count = 1, .reusable = false}}, SHIFT(28),
-  [129] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_change, 3),
+  [129] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_change, 3, .production_id = 2),
   [131] = {.entry = {.count = 1, .reusable = true}}, SHIFT(29),
   [133] = {.entry = {.count = 2, .reusable = false}}, REDUCE(aux_sym__comment_body_repeat1, 2), SHIFT_REPEAT(28),
   [136] = {.entry = {.count = 1, .reusable = true}}, SHIFT(19),
   [138] = {.entry = {.count = 1, .reusable = true}}, SHIFT(13),
   [140] = {.entry = {.count = 1, .reusable = true}}, SHIFT(8),
-  [142] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_change, 5),
+  [142] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_change, 5, .production_id = 2),
   [144] = {.entry = {.count = 1, .reusable = true}}, SHIFT(9),
   [146] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym__comment_body, 3, .production_id = 1),
   [148] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_comment, 2),
@@ -1909,6 +1927,9 @@ extern const TSLanguage *tree_sitter_gitcommit(void) {
     .small_parse_table_map = ts_small_parse_table_map,
     .parse_actions = ts_parse_actions,
     .symbol_names = ts_symbol_names,
+    .field_names = ts_field_names,
+    .field_map_slices = ts_field_map_slices,
+    .field_map_entries = ts_field_map_entries,
     .symbol_metadata = ts_symbol_metadata,
     .public_symbol_map = ts_symbol_map,
     .alias_map = ts_non_terminal_alias_map,

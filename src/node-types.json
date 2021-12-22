@@ -2,7 +2,30 @@
   {
     "type": "change",
     "named": true,
-    "fields": {},
+    "fields": {
+      "kind": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "deleted",
+            "named": false
+          },
+          {
+            "type": "modified",
+            "named": false
+          },
+          {
+            "type": "new file",
+            "named": false
+          },
+          {
+            "type": "renamed",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,

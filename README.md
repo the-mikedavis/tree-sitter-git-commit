@@ -10,6 +10,6 @@ Somewhat complete but needs testing and highlight queries.
 
 ### Example
 
-In the [playground](https://the-mikedavis.github.io/tree-sitter-gitcommit):
+In the [Helix](https://github.com/helix-editor/helix) editor:
 
 <img src="assets/highlight.png" width="600"/>

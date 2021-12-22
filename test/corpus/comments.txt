@@ -1,21 +1,70 @@
-===============================
-Empty commit message
-===============================
+=====================================
+Current branch
+=====================================
 
-
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-#
 # On branch main
+
+---
+
+(source (comment (branch)))
+
+=====================================
+Branch is up to date with remote
+=====================================
+
 # Your branch is up to date with 'origin/main'.
-#
+
+---
+
+(source (comment (branch)))
+
+=====================================
+Head detached at commit
+=====================================
+
+# HEAD detached at f5d1c0b8
+
+---
+
+(source (comment (commit)))
+
+=====================================
+Changing files
+=====================================
+
+# Changes to be committed:
+#	deleted:    Cargo.lock
+#	modified:   Cargo.toml
+#	renamed:    LICENSE -> LICENSE.md
+#	modified:   cli/Cargo.toml
+#	new file:   tmp.txt
 
 ---
 
 (source
   (comment)
-  (comment)
-  (comment)
-  (comment (branch))
-  (comment (branch))
-  (comment))
+  (comment (change (path)))
+  (comment (change (path)))
+  (comment (change (path) (path)))
+  (comment (change (path)))
+  (comment (change (path))))
+
+=====================================
+New file with space in name
+=====================================
+
+#	new file:   file with space.txt
+
+---
+
+(source (comment (change (path))))
+
+=====================================
+Renamed file with arrow in name
+=====================================
+
+#	renamed:    a->b.tx -> a->b.txt
+
+---
+
+(source (comment (change (path) (path))))

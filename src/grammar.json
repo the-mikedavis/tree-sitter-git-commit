@@ -12,16 +12,46 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "\\r?\\n"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "comment"
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\r?\\n"
+            }
+          ]
         },
         {
-          "type": "SYMBOL",
-          "name": "comment"
+          "type": "PATTERN",
+          "value": "\\r?\\n"
         }
       ]
     },
     "comment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_comment_body"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "_comment_body": {
       "type": "CHOICE",
       "members": [
         {
@@ -29,29 +59,203 @@
           "members": [
             {
               "type": "STRING",
-              "value": "#"
+              "value": "On"
             },
             {
-              "type": "CHOICE",
+              "type": "STRING",
+              "value": "branch"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_word"
+              },
+              "named": true,
+              "value": "branch"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "Your"
+            },
+            {
+              "type": "STRING",
+              "value": "branch"
+            },
+            {
+              "type": "STRING",
+              "value": "is"
+            },
+            {
+              "type": "STRING",
+              "value": "up"
+            },
+            {
+              "type": "STRING",
+              "value": "to"
+            },
+            {
+              "type": "STRING",
+              "value": "date"
+            },
+            {
+              "type": "STRING",
+              "value": "with"
+            },
+            {
+              "type": "STRING",
+              "value": "'"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[^\\.\\s']+"
+              },
+              "named": true,
+              "value": "branch"
+            },
+            {
+              "type": "STRING",
+              "value": "'."
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "HEAD"
+            },
+            {
+              "type": "STRING",
+              "value": "detached"
+            },
+            {
+              "type": "STRING",
+              "value": "at"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "commit"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "change"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_word"
+          }
+        }
+      ]
+    },
+    "change": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "new file"
+            },
+            {
+              "type": "STRING",
+              "value": "modified"
+            },
+            {
+              "type": "STRING",
+              "value": "renamed"
+            },
+            {
+              "type": "STRING",
+              "value": "deleted"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "path"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
               "members": [
                 {
-                  "type": "PATTERN",
-                  "value": "[^\\n]+"
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "STRING",
+                      "value": "->"
+                    }
+                  }
                 },
                 {
-                  "type": "BLANK"
+                  "type": "SYMBOL",
+                  "name": "path"
                 }
               ]
+            },
+            {
+              "type": "BLANK"
             }
           ]
         }
       ]
+    },
+    "commit": {
+      "type": "PATTERN",
+      "value": "[a-f0-9]{8}"
+    },
+    "_word": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "\\S+"
+        }
+      }
+    },
+    "path": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "TOKEN",
+        "content": {
+          "type": "PREC",
+          "value": 1,
+          "content": {
+            "type": "PATTERN",
+            "value": "\\S+"
+          }
+        }
+      }
     }
   },
   "extras": [
     {
       "type": "PATTERN",
-      "value": "[ \\t\\f\\v]+"
+      "value": "[\\t\\f\\v ]+"
     }
   ],
   "conflicts": [],

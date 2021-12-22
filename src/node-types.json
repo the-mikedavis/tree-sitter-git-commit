@@ -1,6 +1,44 @@
 [
   {
+    "type": "change",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "comment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "branch",
+          "named": true
+        },
+        {
+          "type": "change",
+          "named": true
+        },
+        {
+          "type": "commit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "path",
     "named": true,
     "fields": {}
   },
@@ -21,6 +59,90 @@
   },
   {
     "type": "#",
+    "named": false
+  },
+  {
+    "type": "'",
+    "named": false
+  },
+  {
+    "type": "'.",
+    "named": false
+  },
+  {
+    "type": "->",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "HEAD",
+    "named": false
+  },
+  {
+    "type": "On",
+    "named": false
+  },
+  {
+    "type": "Your",
+    "named": false
+  },
+  {
+    "type": "at",
+    "named": false
+  },
+  {
+    "type": "branch",
+    "named": true
+  },
+  {
+    "type": "branch",
+    "named": false
+  },
+  {
+    "type": "commit",
+    "named": true
+  },
+  {
+    "type": "date",
+    "named": false
+  },
+  {
+    "type": "deleted",
+    "named": false
+  },
+  {
+    "type": "detached",
+    "named": false
+  },
+  {
+    "type": "is",
+    "named": false
+  },
+  {
+    "type": "modified",
+    "named": false
+  },
+  {
+    "type": "new file",
+    "named": false
+  },
+  {
+    "type": "renamed",
+    "named": false
+  },
+  {
+    "type": "to",
+    "named": false
+  },
+  {
+    "type": "up",
+    "named": false
+  },
+  {
+    "type": "with",
     "named": false
   }
 ]

@@ -74,3 +74,15 @@ Merge conflict paths
 (source
   (comment (header))
   (comment))
+
+=====================================
+Untracked paths
+=====================================
+# Untracked files:
+#	languages.toml
+
+---
+
+(source
+  (comment (header))
+  (comment))

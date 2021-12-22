@@ -86,6 +86,7 @@ module.exports = grammar({
     header: ($) =>
       choice(
         seq("Conflicts", ":"),
+        seq("Untracked", "files", ":"),
         seq("Changes", "to", "be", "committed", ":")
       ),
 

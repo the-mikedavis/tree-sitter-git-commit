@@ -154,6 +154,10 @@
     "named": false
   },
   {
+    "type": "Untracked",
+    "named": false
+  },
+  {
     "type": "Your",
     "named": false
   },
@@ -191,6 +195,10 @@
   },
   {
     "type": "detached",
+    "named": false
+  },
+  {
+    "type": "files",
     "named": false
   },
   {

@@ -49,10 +49,20 @@ closes #123
 ---
 
 (source
-  (ERROR (subject) (UNEXPECTED 'l'))
   (subject)
+  (message (item))
   (comment)
   (comment))
+
+=====================================
+Subject and comment collide
+=====================================
+add LICENSE
+# highlight comment goes here
+
+---
+
+(source (subject) (comment))
 
 =====================================
 Single-line subject with no terminator

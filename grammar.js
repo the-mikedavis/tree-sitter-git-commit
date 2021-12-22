@@ -21,6 +21,7 @@ const PREC = {
   PATH_SEPARATOR_ARROW: 2,
   ITEM: 3,
   SUBJECT_FIRST_CHAR: 4,
+  SUBJECT: 5,
 };
 
 module.exports = grammar({
@@ -31,7 +32,14 @@ module.exports = grammar({
   rules: {
     source: ($) =>
       choice(
-        seq($.subject, NEWLINE, optional(seq(NEWLINE, repeat($._body_line)))),
+        prec(
+          PREC.SUBJECT,
+          seq(
+            $.subject,
+            NEWLINE,
+            optional(seq(optional(NEWLINE), repeat($._body_line)))
+          )
+        ),
         seq(
           optional(choice($.comment, $.message)),
           NEWLINE,

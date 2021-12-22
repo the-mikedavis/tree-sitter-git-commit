@@ -4,17 +4,10 @@ A [tree-sitter](https://tree-sitter.github.io/tree-sitter/) grammar for git comm
 
 ### Status
 
-Incomplete - just starting out.
+Somewhat complete but needs testing and highlight queries.
 
-### TODO
+### Example
 
-- [ ] short subjects 0..=50 chars
-- [ ] long subjects 51..=72 chars
-- [ ] message bodies with at-most 72 chars
-- [ ] comments (always **starting** a line with a `#` character)
-- [ ] issue links (`/#\d+/`)
+In the [playground](https://the-mikedavis.github.io/tree-sitter-gitcommit):
 
-### Gravy
-
-- [ ] expose `modified:`, `added:`, etc. from the summary as named nodes for highlighting
-- [ ] parse structured subjects (e.g. `chore(ci): update deps`)
+<img src="assets/highlight.png" width="600"/>

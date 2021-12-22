@@ -1,11 +1,26 @@
 [
   {
-    "type": "source",
+    "type": "comment",
     "named": true,
     "fields": {}
   },
   {
-    "type": "hello",
+    "type": "source",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "#",
     "named": false
   }
 ]

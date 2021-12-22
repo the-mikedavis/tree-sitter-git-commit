@@ -421,10 +421,10 @@ let tree;
   }
 
   function loadState() {
-    const language = localStorage.getItem("language");
-    const sourceCode = localStorage.getItem("sourceCode");
-    const query = localStorage.getItem("query");
-    const queryEnabled = localStorage.getItem("queryEnabled");
+    const language = localStorage.getItem("languageGitCommit");
+    const sourceCode = localStorage.getItem("sourceCodeGitCommit");
+    const query = localStorage.getItem("queryGitCommit");
+    const queryEnabled = localStorage.getItem("queryEnabledGitCommit");
     if (language != null && sourceCode != null && query != null) {
       queryInput.value = query;
       codeInput.value = sourceCode;
@@ -434,14 +434,14 @@ let tree;
   }
 
   function saveState() {
-    localStorage.setItem("language", languageSelect.value);
-    localStorage.setItem("sourceCode", codeEditor.getValue());
+    localStorage.setItem("languageGitCommit", languageSelect.value);
+    localStorage.setItem("sourceCodeGitCommit", codeEditor.getValue());
     saveQueryState();
   }
 
   function saveQueryState() {
-    localStorage.setItem("queryEnabled", queryCheckbox.checked);
-    localStorage.setItem("query", queryEditor.getValue());
+    localStorage.setItem("queryEnabledGitCommit", queryCheckbox.checked);
+    localStorage.setItem("queryGitCommit", queryEditor.getValue());
   }
 
   function debounce(func, wait, immediate) {

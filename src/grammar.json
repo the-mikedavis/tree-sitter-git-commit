@@ -310,17 +310,69 @@
               "value": "'"
             },
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "PATTERN",
-                "value": "[^\\.\\s']+"
-              },
-              "named": true,
-              "value": "branch"
+              "type": "SYMBOL",
+              "name": "branch"
             },
             {
               "type": "STRING",
               "value": "'."
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "You"
+            },
+            {
+              "type": "STRING",
+              "value": "are"
+            },
+            {
+              "type": "STRING",
+              "value": "currently"
+            },
+            {
+              "type": "STRING",
+              "value": "rebasing"
+            },
+            {
+              "type": "STRING",
+              "value": "branch"
+            },
+            {
+              "type": "STRING",
+              "value": "'"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "branch"
+            },
+            {
+              "type": "STRING",
+              "value": "'"
+            },
+            {
+              "type": "STRING",
+              "value": "on"
+            },
+            {
+              "type": "STRING",
+              "value": "'"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "commit"
+            },
+            {
+              "type": "STRING",
+              "value": "'"
+            },
+            {
+              "type": "STRING",
+              "value": "."
             }
           ]
         },
@@ -475,7 +527,7 @@
     },
     "commit": {
       "type": "PATTERN",
-      "value": "[a-f0-9]{8}"
+      "value": "[a-f0-9]{7,40}"
     },
     "_word": {
       "type": "TOKEN",
@@ -487,6 +539,10 @@
           "value": "\\S+"
         }
       }
+    },
+    "branch": {
+      "type": "PATTERN",
+      "value": "[^\\.\\s']+"
     },
     "path": {
       "type": "REPEAT1",

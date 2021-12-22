@@ -82,8 +82,23 @@ module.exports = grammar({
           "date",
           "with",
           "'",
-          alias(/[^\.\s']+/, $.branch),
+          $.branch,
           "'."
+        ),
+        seq(
+          "You",
+          "are",
+          "currently",
+          "rebasing",
+          "branch",
+          "'",
+          $.branch,
+          "'",
+          "on",
+          "'",
+          $.commit,
+          "'",
+          "."
         ),
         seq("HEAD", "detached", "at", $.commit)
       ),
@@ -103,9 +118,10 @@ module.exports = grammar({
         optional(seq(token(prec(PREC.PATH_SEPARATOR_ARROW, "->")), $.path))
       ),
 
-    commit: ($) => /[a-f0-9]{8}/,
+    commit: ($) => /[a-f0-9]{7,40}/,
 
     _word: ($) => token(prec(PREC.NONSENSE, /\S+/)),
+    branch: ($) => /[^\.\s']+/,
 
     path: ($) => repeat1(token(prec(PREC.PATH, /\S+/))),
 

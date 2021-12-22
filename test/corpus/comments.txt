@@ -86,3 +86,12 @@ Untracked paths
 (source
   (comment (header))
   (comment))
+
+=====================================
+Rebasing branch onto commit
+=====================================
+# You are currently rebasing branch 'md-tree-sitter-rebase' on '34766e2'.
+
+---
+
+(source (comment (branch) (commit)))

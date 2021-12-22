@@ -229,6 +229,30 @@
       "type": "CHOICE",
       "members": [
         {
+          "type": "SYMBOL",
+          "name": "_branch_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "header"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "change"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_word"
+          }
+        }
+      ]
+    },
+    "_branch_declaration": {
+      "type": "CHOICE",
+      "members": [
+        {
           "type": "SEQ",
           "members": [
             {
@@ -320,21 +344,6 @@
               "name": "commit"
             }
           ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "header"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "change"
-        },
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_word"
-          }
         }
       ]
     },

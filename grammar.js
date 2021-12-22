@@ -63,6 +63,15 @@ module.exports = grammar({
 
     _comment_body: ($) =>
       choice(
+        $._branch_declaration,
+        $.header,
+        $.change,
+        // fallback to regular comment words if the words are nonsense
+        repeat1($._word)
+      ),
+
+    _branch_declaration: ($) =>
+      choice(
         seq("On", "branch", alias($._word, $.branch)),
         seq(
           "Your",
@@ -76,11 +85,7 @@ module.exports = grammar({
           alias(/[^\.\s']+/, $.branch),
           "'."
         ),
-        seq("HEAD", "detached", "at", $.commit),
-        $.header,
-        $.change,
-        // fallback to regular comment words if the words are nonsense
-        repeat1($._word)
+        seq("HEAD", "detached", "at", $.commit)
       ),
 
     header: ($) =>

@@ -38,6 +38,21 @@
     }
   },
   {
+    "type": "message",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "path",
     "named": true,
     "fields": {}
@@ -53,9 +68,22 @@
         {
           "type": "comment",
           "named": true
+        },
+        {
+          "type": "message",
+          "named": true
+        },
+        {
+          "type": "subject",
+          "named": true
         }
       ]
     }
+  },
+  {
+    "type": "subject",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "#",
@@ -120,6 +148,10 @@
   {
     "type": "is",
     "named": false
+  },
+  {
+    "type": "item",
+    "named": true
   },
   {
     "type": "modified",

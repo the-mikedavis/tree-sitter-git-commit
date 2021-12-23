@@ -71,7 +71,7 @@ module.exports = grammar({
     summary: ($) =>
       choice(
         seq(
-          alias($._changes_to_be_committed, $.header),
+          alias($._change_header, $.header),
           NEWLINE,
           repeat1(seq("#", $.change, NEWLINE)),
           optional("#")
@@ -84,8 +84,11 @@ module.exports = grammar({
         )
       ),
 
-    _changes_to_be_committed: ($) =>
-      seq("Changes", "to", "be", "committed", ":"),
+    _change_header: ($) =>
+      choice(
+        seq("Changes", "to", "be", "committed", ":"),
+        seq("Changes", "not", "staged", "for", "commit", ":")
+      ),
 
     _branch_declaration: ($) =>
       choice(

@@ -179,3 +179,13 @@ tmp
   (comment)
   (comment)
   (comment))
+
+=====================================
+Changes not staged for commit
+=====================================
+# Changes not staged for commit:
+#	modified:   flake.nix
+
+---
+
+(source (comment (summary (header) (change (path)))))

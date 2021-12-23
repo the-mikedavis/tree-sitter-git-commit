@@ -218,14 +218,18 @@
   },
   {
     "type": "branch",
-    "named": false
-  },
-  {
-    "type": "branch",
     "named": true
   },
   {
+    "type": "branch",
+    "named": false
+  },
+  {
     "type": "by",
+    "named": false
+  },
+  {
+    "type": "commit",
     "named": false
   },
   {
@@ -257,6 +261,10 @@
     "named": false
   },
   {
+    "type": "for",
+    "named": false
+  },
+  {
     "type": "is",
     "named": false
   },
@@ -270,6 +278,10 @@
   },
   {
     "type": "new file",
+    "named": false
+  },
+  {
+    "type": "not",
     "named": false
   },
   {
@@ -291,6 +303,10 @@
   {
     "type": "scissors",
     "named": true
+  },
+  {
+    "type": "staged",
+    "named": false
   },
   {
     "type": "to",

@@ -233,7 +233,7 @@
               "type": "ALIAS",
               "content": {
                 "type": "SYMBOL",
-                "name": "_changes_to_be_committed"
+                "name": "_change_header"
               },
               "named": true,
               "value": "header"
@@ -323,28 +323,62 @@
         }
       ]
     },
-    "_changes_to_be_committed": {
-      "type": "SEQ",
+    "_change_header": {
+      "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "Changes"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "Changes"
+            },
+            {
+              "type": "STRING",
+              "value": "to"
+            },
+            {
+              "type": "STRING",
+              "value": "be"
+            },
+            {
+              "type": "STRING",
+              "value": "committed"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
+            }
+          ]
         },
         {
-          "type": "STRING",
-          "value": "to"
-        },
-        {
-          "type": "STRING",
-          "value": "be"
-        },
-        {
-          "type": "STRING",
-          "value": "committed"
-        },
-        {
-          "type": "STRING",
-          "value": ":"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "Changes"
+            },
+            {
+              "type": "STRING",
+              "value": "not"
+            },
+            {
+              "type": "STRING",
+              "value": "staged"
+            },
+            {
+              "type": "STRING",
+              "value": "for"
+            },
+            {
+              "type": "STRING",
+              "value": "commit"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
+            }
+          ]
         }
       ]
     },

@@ -54,6 +54,10 @@
           "named": true
         },
         {
+          "type": "scissors",
+          "named": true
+        },
+        {
           "type": "summary",
           "named": true
         }
@@ -283,6 +287,10 @@
   {
     "type": "renamed",
     "named": false
+  },
+  {
+    "type": "scissors",
+    "named": true
   },
   {
     "type": "to",

@@ -107,6 +107,17 @@ Rebasing branch onto commit
 (source (comment (branch) (commit)))
 
 =====================================
+Scissors
+=====================================
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+
+---
+
+(source (comment (scissors)))
+
+=====================================
 Verbose ammend commit with diff
 =====================================
 # Please enter the commit message for your changes. Lines starting
@@ -114,12 +125,7 @@ Verbose ammend commit with diff
 #
 # Date:      Thu Dec 23 08:06:48 2021 -0600
 #
-# On branch master
-# Your branch is ahead of 'origin/master' by 1 commit.
-#   (use "git push" to publish your local commits)
-#
-# Changes to be committed:
-#	new file:   tmp.txt
+# ..snip..
 #
 # ------------------------ >8 ------------------------
 # Do not modify or remove the line above.
@@ -141,11 +147,35 @@ index 00000000..ee9808dc
   (comment)
   (comment)
   (comment)
-  (comment (branch))
-  (comment (branch))
   (comment)
   (comment)
-  (comment (summary (header) (change (path))))
+  (comment (scissors))
+  (message)
+  (message)
+  (message)
+  (message)
+  (message)
+  (message)
+  (message)
+  (message))
+
+=====================================
+Commit with scissors cleanup
+=====================================
+tmp
+
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+#
+# Date:      Thu Dec 23 08:06:48 2021 -0600
+# ..snip..
+
+---
+
+(source
+  (subject)
+  (comment (scissors))
   (comment)
-  (trailer (separator) (trailer_body))
-)
+  (comment)
+  (comment))

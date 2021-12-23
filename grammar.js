@@ -14,18 +14,19 @@
 const WHITE_SPACE = /[\t\f\v ]+/;
 const NEWLINE = /\r?\n/;
 const ANYTHING = /[^\n\r]+/;
+const CHANGE = choice("new file", "modified", "renamed", "deleted");
 const PREC = {
   NONSENSE: -1,
   PATH: 5,
   PATH_SEPARATOR_ARROW: 6,
-  CHANGE: 8,
   ITEM: 10,
   USER: 11,
   SUBJECT_FIRST_CHAR: 15,
   SUBJECT: 16,
 };
 
-const CHANGE = choice("new file", "modified", "renamed", "deleted");
+const SCISSORS =
+  /# -+ >8 -+\n# Do not modify or remove the line above.\n# Everything below it will be ignored./;
 
 module.exports = grammar({
   name: "gitcommit",
@@ -34,21 +35,9 @@ module.exports = grammar({
 
   rules: {
     source: ($) =>
-      choice(
-        prec(
-          PREC.SUBJECT,
-          seq(
-            $.subject,
-            NEWLINE,
-            optional(seq(optional(NEWLINE), repeat($._body_line)))
-          )
-        ),
-        seq(
-          optional(choice($.comment, $.message)),
-          NEWLINE,
-          repeat($._body_line)
-        ),
-        choice($.comment, $.subject)
+      seq(
+        optional(choice($.comment, $.subject)),
+        optional(seq(NEWLINE, repeat($._body_line)))
       ),
 
     _body_line: ($) =>
@@ -61,12 +50,15 @@ module.exports = grammar({
       ),
 
     message: ($) =>
-      seq(
-        choice($.user, /[^#\s]+/),
-        optional(repeat(choice($.user, $.item, $._word)))
+      choice(
+        seq(
+          choice($.user, /[^#\s]+/),
+          optional(repeat(choice($.user, $.item, $._word)))
+        )
       ),
 
-    comment: ($) => seq("#", optional($._comment_body)),
+    comment: ($) =>
+      choice(alias(SCISSORS, $.scissors), seq("#", optional($._comment_body))),
 
     _comment_body: ($) =>
       choice(
@@ -147,7 +139,7 @@ module.exports = grammar({
     change: ($) =>
       seq(
         field("kind", CHANGE),
-        token(prec(PREC.CHANGE, ":")),
+        ":",
         $.path,
         optional(seq(token(prec(PREC.PATH_SEPARATOR_ARROW, "->")), $.path))
       ),
@@ -159,7 +151,7 @@ module.exports = grammar({
 
     path: ($) => repeat1(token(prec(PREC.PATH, /\S+/))),
 
-    user: ($) => token(prec(PREC.USER, /@\S+/)),
+    user: ($) => token(prec(PREC.USER, /@[^\s@]+/)),
     item: ($) => token(prec(PREC.ITEM, /#\d+/)),
   },
 });

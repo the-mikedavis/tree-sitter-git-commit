@@ -2,91 +2,26 @@
   "name": "gitcommit",
   "rules": {
     "source": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "PREC",
-          "value": 16,
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "subject"
-              },
-              {
-                "type": "PATTERN",
-                "value": "\\r?\\n"
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "PATTERN",
-                            "value": "\\r?\\n"
-                          },
-                          {
-                            "type": "BLANK"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "REPEAT",
-                        "content": {
-                          "type": "SYMBOL",
-                          "name": "_body_line"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "comment"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "message"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "comment"
                 },
                 {
-                  "type": "BLANK"
+                  "type": "SYMBOL",
+                  "name": "subject"
                 }
               ]
             },
             {
-              "type": "PATTERN",
-              "value": "\\r?\\n"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_body_line"
-              }
+              "type": "BLANK"
             }
           ]
         },
@@ -94,12 +29,23 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "comment"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "\\r?\\n"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_body_line"
+                  }
+                }
+              ]
             },
             {
-              "type": "SYMBOL",
-              "name": "subject"
+              "type": "BLANK"
             }
           ]
         }
@@ -172,67 +118,86 @@
       ]
     },
     "message": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "CHOICE",
+          "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "user"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "user"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[^#\\s]+"
+                }
+              ]
             },
             {
-              "type": "PATTERN",
-              "value": "[^#\\s]+"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "user"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "item"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_word"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "user"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "item"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_word"
+                      }
+                    ]
                   }
-                ]
-              }
-            },
-            {
-              "type": "BLANK"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         }
       ]
     },
     "comment": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "#"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "# -+ >8 -+\\n# Do not modify or remove the line above.\\n# Everything below it will be ignored."
+          },
+          "named": true,
+          "value": "scissors"
         },
         {
-          "type": "CHOICE",
+          "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_comment_body"
+              "type": "STRING",
+              "value": "#"
             },
             {
-              "type": "BLANK"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_comment_body"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         }
@@ -630,44 +595,33 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PREC",
-          "value": 20,
+          "type": "FIELD",
+          "name": "kind",
           "content": {
-            "type": "FIELD",
-            "name": "kind",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "new file"
-                },
-                {
-                  "type": "STRING",
-                  "value": "modified"
-                },
-                {
-                  "type": "STRING",
-                  "value": "renamed"
-                },
-                {
-                  "type": "STRING",
-                  "value": "deleted"
-                }
-              ]
-            }
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "new file"
+              },
+              {
+                "type": "STRING",
+                "value": "modified"
+              },
+              {
+                "type": "STRING",
+                "value": "renamed"
+              },
+              {
+                "type": "STRING",
+                "value": "deleted"
+              }
+            ]
           }
         },
         {
-          "type": "TOKEN",
-          "content": {
-            "type": "PREC",
-            "value": 8,
-            "content": {
-              "type": "STRING",
-              "value": ":"
-            }
-          }
+          "type": "STRING",
+          "value": ":"
         },
         {
           "type": "SYMBOL",
@@ -743,7 +697,7 @@
         "value": 11,
         "content": {
           "type": "PATTERN",
-          "value": "@\\S+"
+          "value": "@[^\\s@]+"
         }
       }
     },

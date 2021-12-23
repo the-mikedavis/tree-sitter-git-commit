@@ -105,3 +105,47 @@ Rebasing branch onto commit
 ---
 
 (source (comment (branch) (commit)))
+
+=====================================
+Verbose ammend commit with diff
+=====================================
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Thu Dec 23 08:06:48 2021 -0600
+#
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	new file:   tmp.txt
+#
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+diff --git a/tmp.txt b/tmp.txt
+new file mode 100644
+index 00000000..ee9808dc
+--- /dev/null
++++ b/tmp.txt
+@@ -0,0 +1 @@
++aaaaaa
+\ No newline at end of file
+
+---
+
+(source
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment (branch))
+  (comment (branch))
+  (comment)
+  (comment)
+  (comment (summary (header) (change (path))))
+  (comment)
+  (trailer (separator) (trailer_body))
+)

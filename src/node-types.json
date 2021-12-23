@@ -193,6 +193,10 @@
     "named": false
   },
   {
+    "type": "ahead",
+    "named": false
+  },
+  {
     "type": "are",
     "named": false
   },
@@ -205,11 +209,19 @@
     "named": false
   },
   {
+    "type": "behind",
+    "named": false
+  },
+  {
+    "type": "branch",
+    "named": false
+  },
+  {
     "type": "branch",
     "named": true
   },
   {
-    "type": "branch",
+    "type": "by",
     "named": false
   },
   {
@@ -254,6 +266,10 @@
   },
   {
     "type": "new file",
+    "named": false
+  },
+  {
+    "type": "of",
     "named": false
   },
   {

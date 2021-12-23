@@ -111,6 +111,20 @@ module.exports = grammar({
           "'."
         ),
         seq(
+          "Your",
+          "branch",
+          "is",
+          choice("ahead", "behind"),
+          "of",
+          "'",
+          $.branch,
+          "'",
+          "by",
+          /\d+/,
+          /commits?/,
+          "."
+        ),
+        seq(
           "You",
           "are",
           "currently",

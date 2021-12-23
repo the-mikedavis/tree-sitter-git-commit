@@ -458,6 +458,68 @@
           "members": [
             {
               "type": "STRING",
+              "value": "Your"
+            },
+            {
+              "type": "STRING",
+              "value": "branch"
+            },
+            {
+              "type": "STRING",
+              "value": "is"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "ahead"
+                },
+                {
+                  "type": "STRING",
+                  "value": "behind"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "of"
+            },
+            {
+              "type": "STRING",
+              "value": "'"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "branch"
+            },
+            {
+              "type": "STRING",
+              "value": "'"
+            },
+            {
+              "type": "STRING",
+              "value": "by"
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\d+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "commits?"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
               "value": "You"
             },
             {

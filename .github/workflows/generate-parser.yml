@@ -31,7 +31,12 @@ jobs:
         run: npm ci
 
       - name: Generate parser files
-        run: npx tree-sitter generate
+        run: |
+          npx tree-sitter generate
+          npx tree-sitter build-wasm
+
+      - name: Copy parser wasm to docs directory
+        run: cp tree-sitter-gitcommit.wasm docs/tree-sitter-gitcommit.wasm
 
       - name: Commit generated parser files
         uses: stefanzweifel/git-auto-commit-action@v4

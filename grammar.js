@@ -52,13 +52,16 @@ module.exports = grammar({
     message: ($) =>
       choice(
         seq(
-          choice($.user, /[^#\s]+/),
+          choice($.user, /[^\s]+/),
           optional(repeat(choice($.user, $.item, $._word)))
         )
       ),
 
     comment: ($) =>
-      choice(alias(SCISSORS, $.scissors), seq("#", optional($._comment_body))),
+      choice(
+        alias(SCISSORS, $.scissors),
+        seq(token.immediate("#"), optional($._comment_body))
+      ),
 
     _comment_body: ($) =>
       choice(

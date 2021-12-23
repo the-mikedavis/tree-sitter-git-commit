@@ -146,7 +146,7 @@ module.exports = grammar({
 
     change: ($) =>
       seq(
-        prec(20, field("kind", CHANGE)),
+        field("kind", CHANGE),
         token(prec(PREC.CHANGE, ":")),
         $.path,
         optional(seq(token(prec(PREC.PATH_SEPARATOR_ARROW, "->")), $.path))

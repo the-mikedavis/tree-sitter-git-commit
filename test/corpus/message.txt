@@ -1,6 +1,6 @@
-=====================================
+================================================================================
 Empty message
-=====================================
+================================================================================
 
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit.
@@ -9,19 +9,21 @@ Empty message
 # Your branch is up to date with 'origin/main'.
 #
 
----
+--------------------------------------------------------------------------------
 
 (source
   (comment)
   (comment)
   (comment)
-  (comment (branch))
-  (comment (branch))
+  (comment
+    (branch))
+  (comment
+    (branch))
   (comment))
 
-=====================================
+================================================================================
 Freeform subject, closes item
-=====================================
+================================================================================
 add LICENSE
 
 closes #123
@@ -29,82 +31,89 @@ closes #123
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit.
 
----
+--------------------------------------------------------------------------------
 
 (source
   (subject)
-  (message (item))
+  (message
+    (item))
   (comment)
   (comment))
 
-=====================================
+================================================================================
 Subject and body collide
-=====================================
+================================================================================
 add LICENSE
 closes #123
 
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit.
 
----
+--------------------------------------------------------------------------------
 
 (source
   (subject)
-  (message (item))
+  (message
+    (item))
   (comment)
   (comment))
 
-=====================================
+================================================================================
 Subject and comment collide
-=====================================
+================================================================================
 add LICENSE
 # highlight comment goes here
 
----
-
-(source (subject) (comment))
-
-=====================================
-Single-line subject with no terminator
-=====================================
-add LICENSE
----
-
-(source (subject))
-
-=====================================
-Subject and body with no terminator
-=====================================
-add LICENSE
-
-closes #123
----
+--------------------------------------------------------------------------------
 
 (source
   (subject)
-  (message (item))
+  (comment))
+
+================================================================================
+Single-line subject with no terminator
+================================================================================
+add LICENSE
+--------------------------------------------------------------------------------
+
+(source
+  (subject))
+
+================================================================================
+Subject and body with no terminator
+================================================================================
+add LICENSE
+
+closes #123
+--------------------------------------------------------------------------------
+
+(source
+  (subject)
+  (message
+    (item))
   (MISSING "source_token1"))
 
-=====================================
+================================================================================
 Body messages interspersed with comments
-=====================================
+================================================================================
 add LICENSE
 
 # this won't show up
 closes #123
 # but the issue number there will because it isn't a comment
 
----
+--------------------------------------------------------------------------------
 
 (source
   (subject)
   (comment)
-  (message (item))
+  (message
+    (item))
   (comment))
 
-=====================================
+================================================================================
 Real rebase commit body
-=====================================
+================================================================================
 add submodule on tree-sitter-rebase, add to languages
 
 # Conflicts:
@@ -130,11 +139,14 @@ add submodule on tree-sitter-rebase, add to languages
 #	COMMIT_EDITMSG
 #
 
----
+--------------------------------------------------------------------------------
 
 (source
   (subject)
-  (comment (summary (header) (path)))
+  (comment
+    (summary
+      (header)
+      (path)))
   (comment)
   (comment)
   (comment)
@@ -143,19 +155,28 @@ add submodule on tree-sitter-rebase, add to languages
   (comment)
   (comment)
   (comment)
-  (comment)
-  (comment (branch) (commit))
   (comment)
   (comment
-    (summary (header)
-      (change (path))
-      (change (path))
-      (change (path))))
-  (comment (summary (header) (path))))
+    (branch)
+    (commit))
+  (comment)
+  (comment
+    (summary
+      (header)
+      (change
+        (path))
+      (change
+        (path))
+      (change
+        (path))))
+  (comment
+    (summary
+      (header)
+      (path))))
 
-=====================================
+================================================================================
 User mention
-=====================================
+================================================================================
 add LICENSE
 
 recommended by @my-lawyer
@@ -163,10 +184,11 @@ recommended by @my-lawyer
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit.
 
----
+--------------------------------------------------------------------------------
 
 (source
   (subject)
-  (message (user))
+  (message
+    (user))
   (comment)
   (comment))

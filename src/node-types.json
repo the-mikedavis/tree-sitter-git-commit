@@ -210,6 +210,10 @@
     "named": false
   },
   {
+    "type": "No",
+    "named": false
+  },
+  {
     "type": "On",
     "named": false
   },
@@ -258,20 +262,16 @@
     "named": false
   },
   {
-    "type": "command",
-    "named": false
-  },
-  {
     "type": "commands",
     "named": false
   },
   {
     "type": "commit",
-    "named": true
+    "named": false
   },
   {
     "type": "commit",
-    "named": false
+    "named": true
   },
   {
     "type": "committed",

@@ -94,6 +94,7 @@ module.exports = grammar({
           "You",
           "are",
           "currently",
+          repeat(/\S+/),
           "rebasing",
           "branch",
           "'",
@@ -109,6 +110,34 @@ module.exports = grammar({
         optional("#")
       ),
 
+    _rebase_header: ($) =>
+      choice(
+        seq(
+          "Last",
+          /commands?/,
+          "done",
+          "(",
+          /\d+/,
+          /commands?/,
+          "done",
+          ")",
+          ":"
+        ),
+        seq(
+          "Next",
+          /commands?/,
+          "to",
+          "do",
+          "(",
+          /\d+/,
+          "remaining",
+          /commands?/,
+          ")",
+          ":"
+        ),
+        seq("No", "commands", "remaining", ".")
+      ),
+
     summary: ($) =>
       choice(
         seq(
@@ -122,23 +151,6 @@ module.exports = grammar({
           NEWLINE,
           repeat1(seq("#", $.path, NEWLINE)),
           optional("#")
-        )
-      ),
-
-    _rebase_header: ($) =>
-      choice(
-        seq("Last", "command", "done", "(", /\d+/, "command", "done", ")", ":"),
-        seq(
-          "Next",
-          "commands",
-          "to",
-          "do",
-          "(",
-          /\d+/,
-          "remaining",
-          "commands",
-          ")",
-          ":"
         )
       ),
 

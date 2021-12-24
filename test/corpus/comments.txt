@@ -220,4 +220,73 @@ add LICENSE
 
 --------------------------------------------------------------------------------
 
-(source (subject) (message))
+(source
+  (subject)
+  (message))
+
+================================================================================
+Rebase with multiple commands done, one command to go
+================================================================================
+Update onedark theme to use new scopes (#1297)
+
+# interactive rebase in progress; onto 176fbe7
+# Last commands done (10 commands done):
+#    reword 02f24e1 Fix match brackets comment (#1346)
+#    reword b2f8f2b Update onedark theme to use new scopes (#1297)
+# Next command to do (1 remaining command):
+#    reword 13d8044 Enable Rust proc macro support (#1350)
+# You are currently editing a commit while rebasing branch 'master' on '176fbe7'.
+#
+# Changes to be committed:
+#	modified:   runtime/themes/onedark.toml
+#
+
+--------------------------------------------------------------------------------
+
+(source
+  (subject)
+  (comment
+    (commit)
+    (summary)
+    (rebase_command)
+    (rebase_command)
+    (summary)
+    (rebase_command)
+    (branch)
+    (commit))
+  (comment
+    (summary
+      (header)
+      (change
+        (path)))))
+
+================================================================================
+Rebase with multiple commands done, zero commands to go
+================================================================================
+# interactive rebase in progress; onto 176fbe7
+# Last commands done (11 commands done):
+#    reword b2f8f2b Update onedark theme to use new scopes (#1297)
+#    reword 13d8044 Enable Rust proc macro support (#1350)
+# No commands remaining.
+# You are currently editing a commit while rebasing branch 'master' on '176fbe7'.
+#
+# Changes to be committed:
+#	modified:   languages.toml
+#
+
+--------------------------------------------------------------------------------
+
+(source
+  (comment
+    (commit)
+    (summary)
+    (rebase_command)
+    (rebase_command)
+    (summary)
+    (branch)
+    (commit))
+  (comment
+    (summary
+      (header)
+      (change
+        (path)))))

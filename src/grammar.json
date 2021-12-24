@@ -374,6 +374,13 @@
               "value": "currently"
             },
             {
+              "type": "REPEAT",
+              "content": {
+                "type": "PATTERN",
+                "value": "\\S+"
+              }
+            },
+            {
               "type": "STRING",
               "value": "rebasing"
             },
@@ -428,6 +435,118 @@
             },
             {
               "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "_rebase_header": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "Last"
+            },
+            {
+              "type": "PATTERN",
+              "value": "commands?"
+            },
+            {
+              "type": "STRING",
+              "value": "done"
+            },
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\d+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "commands?"
+            },
+            {
+              "type": "STRING",
+              "value": "done"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "Next"
+            },
+            {
+              "type": "PATTERN",
+              "value": "commands?"
+            },
+            {
+              "type": "STRING",
+              "value": "to"
+            },
+            {
+              "type": "STRING",
+              "value": "do"
+            },
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\d+"
+            },
+            {
+              "type": "STRING",
+              "value": "remaining"
+            },
+            {
+              "type": "PATTERN",
+              "value": "commands?"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "No"
+            },
+            {
+              "type": "STRING",
+              "value": "commands"
+            },
+            {
+              "type": "STRING",
+              "value": "remaining"
+            },
+            {
+              "type": "STRING",
+              "value": "."
             }
           ]
         }
@@ -528,97 +647,6 @@
                   "type": "BLANK"
                 }
               ]
-            }
-          ]
-        }
-      ]
-    },
-    "_rebase_header": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "Last"
-            },
-            {
-              "type": "STRING",
-              "value": "command"
-            },
-            {
-              "type": "STRING",
-              "value": "done"
-            },
-            {
-              "type": "STRING",
-              "value": "("
-            },
-            {
-              "type": "PATTERN",
-              "value": "\\d+"
-            },
-            {
-              "type": "STRING",
-              "value": "command"
-            },
-            {
-              "type": "STRING",
-              "value": "done"
-            },
-            {
-              "type": "STRING",
-              "value": ")"
-            },
-            {
-              "type": "STRING",
-              "value": ":"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "Next"
-            },
-            {
-              "type": "STRING",
-              "value": "commands"
-            },
-            {
-              "type": "STRING",
-              "value": "to"
-            },
-            {
-              "type": "STRING",
-              "value": "do"
-            },
-            {
-              "type": "STRING",
-              "value": "("
-            },
-            {
-              "type": "PATTERN",
-              "value": "\\d+"
-            },
-            {
-              "type": "STRING",
-              "value": "remaining"
-            },
-            {
-              "type": "STRING",
-              "value": "commands"
-            },
-            {
-              "type": "STRING",
-              "value": ")"
-            },
-            {
-              "type": "STRING",
-              "value": ":"
             }
           ]
         }

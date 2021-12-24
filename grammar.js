@@ -29,7 +29,7 @@ const SCISSORS =
   /# -+ >8 -+\n# Do not modify or remove the line above.\n# Everything below it will be ignored./;
 
 module.exports = grammar({
-  name: "gitcommit",
+  name: "git_commit",
 
   extras: ($) => [WHITE_SPACE],
 

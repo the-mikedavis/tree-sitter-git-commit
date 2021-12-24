@@ -1,5 +1,5 @@
 {
-  "name": "gitcommit",
+  "name": "git_commit",
   "rules": {
     "source": {
       "type": "SEQ",

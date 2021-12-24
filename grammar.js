@@ -19,6 +19,7 @@ const PREC = {
   NONSENSE: -1,
   PATH: 5,
   PATH_SEPARATOR_ARROW: 6,
+  REBASE_COMMAND: 7,
   ITEM: 10,
   USER: 11,
   SUBJECT_FIRST_CHAR: 15,
@@ -65,10 +66,47 @@ module.exports = grammar({
 
     _comment_body: ($) =>
       choice(
+        $._rebase_summary,
         $.summary,
         $._branch_declaration,
         // fallback to regular comment words if the words are nonsense
         repeat1($._word)
+      ),
+
+    _rebase_summary: ($) =>
+      seq(
+        seq(
+          "interactive",
+          "rebase",
+          "in",
+          "progress",
+          ";",
+          "onto",
+          $.commit,
+          NEWLINE
+        ),
+        seq("#", alias($._rebase_header, $.summary), NEWLINE),
+        repeat(seq("#", $.rebase_command, NEWLINE)),
+        seq("#", alias($._rebase_header, $.summary), NEWLINE),
+        repeat(seq("#", $.rebase_command, NEWLINE)),
+        seq(
+          "#",
+          "You",
+          "are",
+          "currently",
+          "rebasing",
+          "branch",
+          "'",
+          $.branch,
+          "'",
+          "on",
+          "'",
+          $.commit,
+          "'",
+          "."
+        ),
+        NEWLINE,
+        optional("#")
       ),
 
     summary: ($) =>
@@ -84,6 +122,23 @@ module.exports = grammar({
           NEWLINE,
           repeat1(seq("#", $.path, NEWLINE)),
           optional("#")
+        )
+      ),
+
+    _rebase_header: ($) =>
+      choice(
+        seq("Last", "command", "done", "(", /\d+/, "command", "done", ")", ":"),
+        seq(
+          "Next",
+          "commands",
+          "to",
+          "do",
+          "(",
+          /\d+/,
+          "remaining",
+          "commands",
+          ")",
+          ":"
         )
       ),
 
@@ -121,21 +176,6 @@ module.exports = grammar({
           /commits?/,
           "."
         ),
-        seq(
-          "You",
-          "are",
-          "currently",
-          "rebasing",
-          "branch",
-          "'",
-          $.branch,
-          "'",
-          "on",
-          "'",
-          $.commit,
-          "'",
-          "."
-        ),
         seq("HEAD", "detached", "at", $.commit)
       ),
 
@@ -153,6 +193,23 @@ module.exports = grammar({
 
     _word: ($) => token(prec(PREC.NONSENSE, /\S+/)),
     branch: ($) => /[^\.\s']+/,
+
+    rebase_command: ($) =>
+      seq(
+        choice(
+          "pick",
+          "edit",
+          "squash",
+          "merge",
+          "fixup",
+          "drop",
+          "reword",
+          "exec",
+          "label",
+          "reset"
+        ),
+        repeat1(/\S+/)
+      ),
 
     path: ($) => repeat1(token(prec(PREC.PATH, /\S+/))),
 

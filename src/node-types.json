@@ -54,6 +54,10 @@
           "named": true
         },
         {
+          "type": "rebase_command",
+          "named": true
+        },
+        {
           "type": "scissors",
           "named": true
         },
@@ -94,6 +98,11 @@
     "fields": {}
   },
   {
+    "type": "rebase_command",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "source",
     "named": true,
     "fields": {},
@@ -127,7 +136,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "change",
@@ -157,6 +166,14 @@
     "named": false
   },
   {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
     "type": "->",
     "named": false
   },
@@ -169,6 +186,10 @@
     "named": false
   },
   {
+    "type": ";",
+    "named": false
+  },
+  {
     "type": "Changes",
     "named": false
   },
@@ -178,6 +199,14 @@
   },
   {
     "type": "HEAD",
+    "named": false
+  },
+  {
+    "type": "Last",
+    "named": false
+  },
+  {
+    "type": "Next",
     "named": false
   },
   {
@@ -218,14 +247,22 @@
   },
   {
     "type": "branch",
-    "named": true
-  },
-  {
-    "type": "branch",
     "named": false
   },
   {
+    "type": "branch",
+    "named": true
+  },
+  {
     "type": "by",
+    "named": false
+  },
+  {
+    "type": "command",
+    "named": false
+  },
+  {
+    "type": "commands",
     "named": false
   },
   {
@@ -257,11 +294,43 @@
     "named": false
   },
   {
+    "type": "do",
+    "named": false
+  },
+  {
+    "type": "done",
+    "named": false
+  },
+  {
+    "type": "drop",
+    "named": false
+  },
+  {
+    "type": "edit",
+    "named": false
+  },
+  {
+    "type": "exec",
+    "named": false
+  },
+  {
     "type": "files",
     "named": false
   },
   {
+    "type": "fixup",
+    "named": false
+  },
+  {
     "type": "for",
+    "named": false
+  },
+  {
+    "type": "in",
+    "named": false
+  },
+  {
+    "type": "interactive",
     "named": false
   },
   {
@@ -271,6 +340,14 @@
   {
     "type": "item",
     "named": true
+  },
+  {
+    "type": "label",
+    "named": false
+  },
+  {
+    "type": "merge",
+    "named": false
   },
   {
     "type": "modified",
@@ -293,7 +370,27 @@
     "named": false
   },
   {
+    "type": "onto",
+    "named": false
+  },
+  {
+    "type": "pick",
+    "named": false
+  },
+  {
+    "type": "progress",
+    "named": false
+  },
+  {
+    "type": "rebase",
+    "named": false
+  },
+  {
     "type": "rebasing",
+    "named": false
+  },
+  {
+    "type": "remaining",
     "named": false
   },
   {
@@ -301,8 +398,20 @@
     "named": false
   },
   {
+    "type": "reset",
+    "named": false
+  },
+  {
+    "type": "reword",
+    "named": false
+  },
+  {
     "type": "scissors",
     "named": true
+  },
+  {
+    "type": "squash",
+    "named": false
   },
   {
     "type": "staged",

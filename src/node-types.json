@@ -42,7 +42,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
         {
@@ -51,10 +51,6 @@
         },
         {
           "type": "commit",
-          "named": true
-        },
-        {
-          "type": "rebase_command",
           "named": true
         },
         {
@@ -136,10 +132,18 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
+          "type": "branch",
+          "named": true
+        },
+        {
           "type": "change",
+          "named": true
+        },
+        {
+          "type": "commit",
           "named": true
         },
         {
@@ -148,6 +152,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "rebase_command",
           "named": true
         }
       ]

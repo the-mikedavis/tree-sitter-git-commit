@@ -246,14 +246,15 @@ Update onedark theme to use new scopes (#1297)
 (source
   (subject)
   (comment
-    (commit)
-    (summary)
-    (rebase_command)
-    (rebase_command)
-    (summary)
-    (rebase_command)
-    (branch)
-    (commit))
+    (summary
+      (commit)
+      (header)
+      (rebase_command)
+      (rebase_command)
+      (header)
+      (rebase_command)
+      (branch)
+      (commit)))
   (comment
     (summary
       (header)
@@ -278,13 +279,14 @@ Rebase with multiple commands done, zero commands to go
 
 (source
   (comment
-    (commit)
-    (summary)
-    (rebase_command)
-    (rebase_command)
-    (summary)
-    (branch)
-    (commit))
+    (summary
+      (commit)
+      (header)
+      (rebase_command)
+      (rebase_command)
+      (header)
+      (branch)
+      (commit)))
   (comment
     (summary
       (header)

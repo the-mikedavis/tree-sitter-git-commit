@@ -151,14 +151,15 @@ add submodule on tree-sitter-rebase, add to languages
   (comment)
   (comment)
   (comment
-    (commit)
-    (summary)
-    (rebase_command)
-    (summary)
-    (rebase_command)
-    (rebase_command)
-    (branch)
-    (commit))
+    (summary
+      (commit)
+      (header)
+      (rebase_command)
+      (header)
+      (rebase_command)
+      (rebase_command)
+      (branch)
+      (commit)))
   (comment
     (summary
       (header)

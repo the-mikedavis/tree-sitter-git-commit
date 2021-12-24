@@ -66,7 +66,7 @@ module.exports = grammar({
 
     _comment_body: ($) =>
       choice(
-        $._rebase_summary,
+        alias($._rebase_summary, $.summary),
         $.summary,
         $._branch_declaration,
         // fallback to regular comment words if the words are nonsense
@@ -85,9 +85,9 @@ module.exports = grammar({
           $.commit,
           NEWLINE
         ),
-        seq("#", alias($._rebase_header, $.summary), NEWLINE),
+        seq("#", alias($._rebase_header, $.header), NEWLINE),
         repeat(seq("#", $.rebase_command, NEWLINE)),
-        seq("#", alias($._rebase_header, $.summary), NEWLINE),
+        seq("#", alias($._rebase_header, $.header), NEWLINE),
         repeat(seq("#", $.rebase_command, NEWLINE)),
         seq(
           "#",

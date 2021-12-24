@@ -210,8 +210,13 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_rebase_summary"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_rebase_summary"
+          },
+          "named": true,
+          "value": "summary"
         },
         {
           "type": "SYMBOL",
@@ -284,7 +289,7 @@
                 "name": "_rebase_header"
               },
               "named": true,
-              "value": "summary"
+              "value": "header"
             },
             {
               "type": "PATTERN",
@@ -326,7 +331,7 @@
                 "name": "_rebase_header"
               },
               "named": true,
-              "value": "summary"
+              "value": "header"
             },
             {
               "type": "PATTERN",

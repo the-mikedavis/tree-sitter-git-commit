@@ -118,51 +118,53 @@
       ]
     },
     "message": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
+          "type": "REPEAT",
+          "content": {
+            "type": "PATTERN",
+            "value": "[\\t\\f\\v ]+"
+          }
+        },
+        {
+          "type": "CHOICE",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "user"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "[^\\s]+"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "user"
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "user"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "item"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "_word"
-                      }
-                    ]
+              "type": "PATTERN",
+              "value": "[^\\s]+"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "user"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "item"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_word"
                   }
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
+                ]
+              }
+            },
+            {
+              "type": "BLANK"
             }
           ]
         }

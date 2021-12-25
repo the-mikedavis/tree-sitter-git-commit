@@ -51,11 +51,10 @@ module.exports = grammar({
       ),
 
     message: ($) =>
-      choice(
-        seq(
-          choice($.user, /[^\s]+/),
-          optional(repeat(choice($.user, $.item, $._word)))
-        )
+      seq(
+        repeat(WHITE_SPACE),
+        choice($.user, /[^\s]+/),
+        optional(repeat(choice($.user, $.item, $._word)))
       ),
 
     comment: ($) =>

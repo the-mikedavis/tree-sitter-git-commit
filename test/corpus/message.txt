@@ -154,10 +154,10 @@ add submodule on tree-sitter-rebase, add to languages
     (summary
       (commit)
       (header)
-      (rebase_command)
+      (rebasecommand)
       (header)
-      (rebase_command)
-      (rebase_command)
+      (rebasecommand)
+      (rebasecommand)
       (branch)
       (commit)))
   (comment

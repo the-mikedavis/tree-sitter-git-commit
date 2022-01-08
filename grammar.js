@@ -85,9 +85,9 @@ module.exports = grammar({
           NEWLINE
         ),
         seq("#", alias($._rebase_header, $.header), NEWLINE),
-        repeat(seq("#", $.rebasecommand, NEWLINE)),
+        repeat(seq("#", $.rebase_command, NEWLINE)),
         seq("#", alias($._rebase_header, $.header), NEWLINE),
-        repeat(seq("#", $.rebasecommand, NEWLINE)),
+        repeat(seq("#", $.rebase_command, NEWLINE)),
         seq(
           "#",
           "You",
@@ -205,20 +205,21 @@ module.exports = grammar({
     _word: ($) => token(prec(PREC.NONSENSE, /\S+/)),
     branch: ($) => /[^\.\s']+/,
 
-    rebasecommand: ($) => seq($._rebase_operator, repeat1(/\S+/)),
-
-    _rebase_operator: ($) =>
-      choice(
-        "pick",
-        "edit",
-        "squash",
-        "merge",
-        "fixup",
-        "drop",
-        "reword",
-        "exec",
-        "label",
-        "reset"
+    rebase_command: ($) =>
+      seq(
+        choice(
+          "pick",
+          "edit",
+          "squash",
+          "merge",
+          "fixup",
+          "drop",
+          "reword",
+          "exec",
+          "label",
+          "reset"
+        ),
+        repeat1(/\S+/)
       ),
 
     path: ($) => repeat1(token(prec(PREC.PATH, /\S+/))),

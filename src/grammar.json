@@ -310,7 +310,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "rebasecommand"
+                "name": "rebase_command"
               },
               {
                 "type": "PATTERN",
@@ -352,7 +352,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "rebasecommand"
+                "name": "rebase_command"
               },
               {
                 "type": "PATTERN",
@@ -994,12 +994,53 @@
       "type": "PATTERN",
       "value": "[^\\.\\s']+"
     },
-    "rebasecommand": {
+    "rebase_command": {
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_rebase_operator"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "pick"
+            },
+            {
+              "type": "STRING",
+              "value": "edit"
+            },
+            {
+              "type": "STRING",
+              "value": "squash"
+            },
+            {
+              "type": "STRING",
+              "value": "merge"
+            },
+            {
+              "type": "STRING",
+              "value": "fixup"
+            },
+            {
+              "type": "STRING",
+              "value": "drop"
+            },
+            {
+              "type": "STRING",
+              "value": "reword"
+            },
+            {
+              "type": "STRING",
+              "value": "exec"
+            },
+            {
+              "type": "STRING",
+              "value": "label"
+            },
+            {
+              "type": "STRING",
+              "value": "reset"
+            }
+          ]
         },
         {
           "type": "REPEAT1",
@@ -1007,51 +1048,6 @@
             "type": "PATTERN",
             "value": "\\S+"
           }
-        }
-      ]
-    },
-    "_rebase_operator": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "pick"
-        },
-        {
-          "type": "STRING",
-          "value": "edit"
-        },
-        {
-          "type": "STRING",
-          "value": "squash"
-        },
-        {
-          "type": "STRING",
-          "value": "merge"
-        },
-        {
-          "type": "STRING",
-          "value": "fixup"
-        },
-        {
-          "type": "STRING",
-          "value": "drop"
-        },
-        {
-          "type": "STRING",
-          "value": "reword"
-        },
-        {
-          "type": "STRING",
-          "value": "exec"
-        },
-        {
-          "type": "STRING",
-          "value": "label"
-        },
-        {
-          "type": "STRING",
-          "value": "reset"
         }
       ]
     },

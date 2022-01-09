@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   generate:
     name: Generate Parser
@@ -39,4 +40,12 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Generate parser
-          file_pattern: src *.wasm
+          file_pattern: src
+
+      - name: Commit generated WASM binding
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Generate WASM binding
+          file_pattern: "*.wasm"
+          branch: gh-pages
+          skip_dirty_check: true

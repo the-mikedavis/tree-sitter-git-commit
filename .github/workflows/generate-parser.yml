@@ -48,6 +48,8 @@ jobs:
           ref: gh-pages
           path: ./gh-pages
 
+      - run: mv *.wasm ./gh-pages
+
       - name: Commit generated WASM binding
         uses: stefanzweifel/git-auto-commit-action@v4
         with:

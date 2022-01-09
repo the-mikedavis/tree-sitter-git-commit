@@ -48,4 +48,3 @@ jobs:
           commit_message: Generate WASM binding
           file_pattern: "*.wasm"
           branch: gh-pages
-          skip_dirty_check: true

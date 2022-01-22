@@ -11,6 +11,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install cargo
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Install tree-sitter-cli
+        run: cargo install tree-sitter-cli
+
       - name: Install Node
         uses: actions/setup-node@v2
         with:
@@ -28,10 +36,10 @@ jobs:
         run: npm ci
 
       - name: Ensure generated parser files are up to date
-        run: npx tree-sitter generate
+        run: tree-sitter generate
 
       - name: Run tree-sitter tests
-        run: npx tree-sitter test
+        run: tree-sitter test
 
       - name: Check formatting
         run: npm run format-check

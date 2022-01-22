@@ -15,6 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install cargo
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Install tree-sitter-cli
+        run: cargo install tree-sitter-cli
+
       - name: Install Node
         uses: actions/setup-node@v2
         with:
@@ -33,8 +41,8 @@ jobs:
 
       - name: Generate parser files
         run: |
-          npx tree-sitter generate
-          npx tree-sitter build-wasm
+          tree-sitter generate
+          tree-sitter build-wasm
 
       - name: Commit generated parser files
         uses: stefanzweifel/git-auto-commit-action@v4

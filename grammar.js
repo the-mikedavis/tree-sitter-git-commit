@@ -36,7 +36,9 @@ module.exports = grammar({
       seq(
         optional(choice($.comment, $.subject)),
         optional(seq(NEWLINE, repeat($._body_line))),
-        optional(seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message))))
+        optional(
+          seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
+        )
       ),
 
     _body_line: ($) =>
@@ -55,8 +57,7 @@ module.exports = grammar({
         optional(repeat(choice($.user, $.item, $._word)))
       ),
 
-    comment: ($) =>
-      seq(token.immediate("#"), optional($._comment_body)),
+    comment: ($) => seq(token.immediate("#"), optional($._comment_body)),
 
     _comment_body: ($) =>
       choice(

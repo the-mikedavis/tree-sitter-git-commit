@@ -48,6 +48,45 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "# -+ >8 -+\\r?\\n# Do not modify or remove the line above.\\r?\\n# Everything below it will be ignored.\\r?\\n?"
+                  },
+                  "named": true,
+                  "value": "scissors"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "_rest"
+                      },
+                      "named": true,
+                      "value": "message"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -171,38 +210,24 @@
       ]
     },
     "comment": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
+          "type": "IMMEDIATE_TOKEN",
           "content": {
-            "type": "PATTERN",
-            "value": "# -+ >8 -+\\n# Do not modify or remove the line above.\\n# Everything below it will be ignored."
-          },
-          "named": true,
-          "value": "scissors"
+            "type": "STRING",
+            "value": "#"
+          }
         },
         {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "STRING",
-                "value": "#"
-              }
+              "type": "SYMBOL",
+              "name": "_comment_body"
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_comment_body"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
+              "type": "BLANK"
             }
           ]
         }
@@ -1085,6 +1110,22 @@
           "type": "PATTERN",
           "value": "#\\d+"
         }
+      }
+    },
+    "_rest": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": ".*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\r?\\n"
+          }
+        ]
       }
     }
   },

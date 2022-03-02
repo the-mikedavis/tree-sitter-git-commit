@@ -1,10 +1,7 @@
 /* glossary:
    - subject: the first line of a commit
-     - short subjects are <= 50 characters long
-     - long subjects are 51..72 characters long
-     - oversized subjects are >= 73 characters long
    - message: the body of a commit
-     - starts on the third line of the file (1-indexed)
+     - usually starts on the third line of the file (1-indexed)
      - may be interspersed with comments
    - item: an issue or PR
    - change: how a file will change with this commit
@@ -27,7 +24,7 @@ const PREC = {
 };
 
 const SCISSORS =
-  /# -+ >8 -+\n# Do not modify or remove the line above.\n# Everything below it will be ignored./;
+  /# -+ >8 -+\r?\n# Do not modify or remove the line above.\r?\n# Everything below it will be ignored.\r?\n?/;
 
 module.exports = grammar({
   name: "git_commit",
@@ -38,7 +35,8 @@ module.exports = grammar({
     source: ($) =>
       seq(
         optional(choice($.comment, $.subject)),
-        optional(seq(NEWLINE, repeat($._body_line)))
+        optional(seq(NEWLINE, repeat($._body_line))),
+        optional(seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message))))
       ),
 
     _body_line: ($) =>
@@ -58,10 +56,7 @@ module.exports = grammar({
       ),
 
     comment: ($) =>
-      choice(
-        alias(SCISSORS, $.scissors),
-        seq(token.immediate("#"), optional($._comment_body))
-      ),
+      seq(token.immediate("#"), optional($._comment_body)),
 
     _comment_body: ($) =>
       choice(
@@ -226,5 +221,7 @@ module.exports = grammar({
 
     user: ($) => token(prec(PREC.USER, /@[^\s@]+/)),
     item: ($) => token(prec(PREC.ITEM, /#\d+/)),
+
+    _rest: ($) => repeat1(choice(/.*/, NEWLINE)),
   },
 });

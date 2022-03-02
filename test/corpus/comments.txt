@@ -128,8 +128,7 @@ Scissors
 --------------------------------------------------------------------------------
 
 (source
-  (comment
-    (scissors)))
+  (scissors))
 
 ================================================================================
 Verbose ammend commit with diff
@@ -163,15 +162,7 @@ index 00000000..ee9808dc
   (comment)
   (comment)
   (comment)
-  (comment
-    (scissors))
-  (message)
-  (message)
-  (message)
-  (message)
-  (message)
-  (message)
-  (message)
+  (scissors)
   (message))
 
 ================================================================================
@@ -190,11 +181,8 @@ tmp
 
 (source
   (subject)
-  (comment
-    (scissors))
-  (comment)
-  (comment)
-  (comment))
+  (scissors)
+  (message))
 
 ================================================================================
 Changes not staged for commit

@@ -54,10 +54,6 @@
           "named": true
         },
         {
-          "type": "scissors",
-          "named": true
-        },
-        {
           "type": "summary",
           "named": true
         }
@@ -112,6 +108,10 @@
         },
         {
           "type": "message",
+          "named": true
+        },
+        {
+          "type": "scissors",
           "named": true
         },
         {

@@ -182,6 +182,10 @@
     "named": false
   },
   {
+    "type": ",",
+    "named": false
+  },
+  {
     "type": "->",
     "named": false
   },
@@ -242,6 +246,10 @@
     "named": false
   },
   {
+    "type": "and",
+    "named": false
+  },
+  {
     "type": "are",
     "named": false
   },
@@ -275,11 +283,11 @@
   },
   {
     "type": "commit",
-    "named": false
+    "named": true
   },
   {
     "type": "commit",
-    "named": true
+    "named": false
   },
   {
     "type": "committed",
@@ -299,6 +307,10 @@
   },
   {
     "type": "detached",
+    "named": false
+  },
+  {
+    "type": "diverged",
     "named": false
   },
   {
@@ -331,6 +343,10 @@
   },
   {
     "type": "for",
+    "named": false
+  },
+  {
+    "type": "have",
     "named": false
   },
   {

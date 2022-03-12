@@ -21,6 +21,21 @@ Branch is up to date with remote
     (branch)))
 
 ================================================================================
+Branch diverged from remote
+================================================================================
+# Your branch and 'origin/md-top-level-expressions' have diverged,
+# and have 10 and 1 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+
+--------------------------------------------------------------------------------
+
+(source
+  (comment
+    (branch))
+  (comment)
+  (comment))
+
+================================================================================
 Head detached at commit
 ================================================================================
 # HEAD detached at f5d1c0b8

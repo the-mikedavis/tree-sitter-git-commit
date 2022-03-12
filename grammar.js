@@ -183,6 +183,17 @@ module.exports = grammar({
           /commits?/,
           "."
         ),
+        seq(
+          "Your",
+          "branch",
+          "and",
+          "'",
+          $.branch,
+          "'",
+          "have",
+          "diverged",
+          ",",
+        ),
         seq("HEAD", "detached", "at", $.commit)
       ),
 

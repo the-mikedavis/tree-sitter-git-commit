@@ -192,7 +192,7 @@ module.exports = grammar({
           "'",
           "have",
           "diverged",
-          ",",
+          ","
         ),
         seq("HEAD", "detached", "at", $.commit)
       ),

@@ -73,13 +73,32 @@
         }
       ]
     },
-    "_body_line": {
+    "subject": {
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[\\r\\n]+"
+          "type": "PREC",
+          "value": 15,
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[^#\\r\\n]"
+            }
+          }
         },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "PATTERN",
+            "value": "[^\\n\\r]+"
+          }
+        }
+      ]
+    },
+    "_body_line": {
+      "type": "SEQ",
+      "members": [
         {
           "type": "CHOICE",
           "members": [
@@ -100,29 +119,10 @@
               "type": "BLANK"
             }
           ]
-        }
-      ]
-    },
-    "subject": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "TOKEN",
-          "content": {
-            "type": "PREC",
-            "value": 15,
-            "content": {
-              "type": "PATTERN",
-              "value": "[^#\\r\\n]"
-            }
-          }
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "PATTERN",
-            "value": "[^\\n\\r]+"
-          }
+          "type": "SYMBOL",
+          "name": "_newline"
         }
       ]
     },

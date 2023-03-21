@@ -1,3 +1,4 @@
+/// <reference types="./node_modules/tree-sitter-cli/dsl.d.ts">
 /* glossary:
    - subject: the first line of a commit
    - message: the body of a commit
@@ -8,6 +9,10 @@
      - either 'new file', 'modified', 'renamed' or 'deleted'
  */
 
+/**
+ * Whitespace that is ignored by the parser: tab, form feed, vertical tab, and
+ * space characters. Note that whitespace doesn't include newlines!
+ */
 const WHITE_SPACE = /[\t\f\v ]+/;
 const ANYTHING = /[^\n\r]+/;
 const PREC = {
@@ -16,7 +21,9 @@ const PREC = {
   PATH_SEPARATOR_ARROW: 6,
   ITEM: 10,
   USER: 11,
-  SUBJECT: 15,
+  SUBJECT_FIRST_CHAR: 15,
+  SUBJECT: 16,
+  TRAILER: 17,
 };
 
 const SCISSORS =
@@ -36,12 +43,20 @@ module.exports = grammar({
           seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
         )
       ),
-
-    _body_line: ($) => seq(/[\r\n]+/, optional(choice($.message, $.comment))),
-
+    /**
+     * The subject of the commit message: the first line.
+     */
     subject: ($) =>
-      seq(token(prec(PREC.SUBJECT, /[^#\r\n]/)), repeat(ANYTHING)),
+      seq(
+        prec(PREC.SUBJECT_FIRST_CHAR, token.immediate(/[^#\r\n]/)),
+        repeat(ANYTHING)
+      ),
 
+    _body_line: ($) => seq(optional(choice($.message, $.comment)), $._newline),
+
+    /**
+     * Non-comment body
+     */
     message: ($) =>
       choice(
         // Lines starting with spaces are certainly messages and may start with any characters.
@@ -62,7 +77,6 @@ module.exports = grammar({
         // fallback to regular comment words if the words are nonsense
         repeat1($._word)
       ),
-
     _rebase_summary: ($) =>
       seq(
         seq(
@@ -206,6 +220,9 @@ module.exports = grammar({
     commit: ($) => /[a-f0-9]{7,40}/,
 
     _word: ($) => token(prec(PREC.NONSENSE, /\S+/)),
+    /**
+     * For most of the details on branch name constraints, see https://git-scm.com/docs/git-check-ref-format
+     */
     branch: ($) => /[^\.\s']+/,
 
     rebase_command: ($) =>
@@ -228,6 +245,7 @@ module.exports = grammar({
     path: ($) => repeat1(token(prec(PREC.PATH, /\S+/))),
 
     user: ($) => token(prec(PREC.USER, /@[^\s@]+/)),
+    /** a github-style issue or PR reference */
     item: ($) => token(prec(PREC.ITEM, /#\d+/)),
 
     _rest: ($) => repeat1(choice(/.*/, $._newline)),

@@ -33,16 +33,22 @@ module.exports = grammar({
   name: "git_commit",
 
   extras: ($) => [WHITE_SPACE],
-
+  conflicts: ($) => [[$.message, $.trailer]],
   rules: {
     source: ($) =>
       seq(
         optional(choice($.comment, $.subject)),
-        repeat($._body_line),
+        optional(
+          seq(
+            $._newline,
+            optional(seq(repeat($._body_line), repeat($.trailer)))
+          )
+        ),
         optional(
           seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
         )
       ),
+    _newline: ($) => /\r?\n/,
     /**
      * The subject of the commit message: the first line.
      */
@@ -52,7 +58,8 @@ module.exports = grammar({
         repeat(ANYTHING)
       ),
 
-    _body_line: ($) => seq(optional(choice($.message, $.comment)), $._newline),
+    _body_line: ($) =>
+      prec.right(1, seq(optional(choice($.message, $.comment)), $._newline)),
 
     /**
      * Non-comment body
@@ -77,6 +84,37 @@ module.exports = grammar({
         // fallback to regular comment words if the words are nonsense
         repeat1($._word)
       ),
+    /**
+     * Trailers are "lines that look similar to RFC 822 e-mail headers at the
+     * end of the otherwise free-form part of a commit message." For more details
+     * on the format, see https://git-scm.com/docs/git-interpret-trailers
+     */
+    trailer: ($) =>
+      prec.left(
+        PREC.TRAILER,
+        seq(
+          field("key", $._word),
+          /[:=]/,
+          field("value", repeat1(choice($.user, $.item, $._word)))
+        )
+      ),
+    comment: ($) =>
+      prec.right(
+        1,
+        seq(
+          "#",
+          optional(
+            choice(
+              alias($._rebase_summary, $.summary),
+              $.summary,
+              $._branch_declaration,
+              // fallback to regular comment words if the words are nonsense
+              repeat1($._word)
+            )
+          )
+        )
+      ),
+
     _rebase_summary: ($) =>
       seq(
         seq(
@@ -168,21 +206,13 @@ module.exports = grammar({
       choice(
         seq("On", "branch", alias($._word, $.branch)),
         seq(
-          "Your",
-          "branch",
-          "is",
-          "up",
-          "to",
-          "date",
-          "with",
+          ..."Your branch is up to date with".split(" "),
           "'",
           $.branch,
           "'."
         ),
         seq(
-          "Your",
-          "branch",
-          "is",
+          ..."Your branch is".split(" "),
           choice(seq("ahead", "of"), "behind"),
           "'",
           $.branch,
@@ -193,9 +223,7 @@ module.exports = grammar({
           "."
         ),
         seq(
-          "Your",
-          "branch",
-          "and",
+          ..."Your branch and".split(" "),
           "'",
           $.branch,
           "'",
@@ -249,6 +277,5 @@ module.exports = grammar({
     item: ($) => token(prec(PREC.ITEM, /#\d+/)),
 
     _rest: ($) => repeat1(choice(/.*/, $._newline)),
-    _newline: ($) => /\r?\n/,
   },
 });

@@ -146,11 +146,7 @@ Scissors
   (scissors))
 
 ================================================================================
-<<<<<<< HEAD
-Verbose amend commit with diff
-=======
 Verbose amended commit with diff
->>>>>>> 7777c97... refactor: add comments, rearrange some rules
 ================================================================================
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit.

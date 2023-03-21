@@ -117,6 +117,10 @@
         {
           "type": "subject",
           "named": true
+        },
+        {
+          "type": "trailer",
+          "named": true
         }
       ]
     }
@@ -159,6 +163,26 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "trailer",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "item",
+            "named": true
+          },
+          {
+            "type": "user",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -267,11 +291,11 @@
   },
   {
     "type": "branch",
-    "named": true
+    "named": false
   },
   {
     "type": "branch",
-    "named": false
+    "named": true
   },
   {
     "type": "by",

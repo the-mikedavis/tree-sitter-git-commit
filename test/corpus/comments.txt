@@ -295,3 +295,16 @@ Rebase with multiple commands done, zero commands to go
       (header)
       (change
         (path)))))
+
+================================================================================
+Comment without separating space
+================================================================================
+Title
+
+#This is a comment without the space separating the '#' and comment.
+
+--------------------------------------------------------------------------------
+
+(source
+  (subject)
+  (comment))

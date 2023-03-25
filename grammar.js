@@ -53,11 +53,11 @@ module.exports = grammar({
     message: ($) =>
       seq(
         repeat(WHITE_SPACE),
-        choice($.user, /[^\s]+/),
+        choice($.user, /[^\s#]+/, /\s+/),
         optional(repeat(choice($.user, $.item, $._word)))
       ),
 
-    comment: ($) => seq(token.immediate("#"), optional($._comment_body)),
+    comment: ($) => seq("#", optional($._comment_body)),
 
     _comment_body: ($) =>
       choice(
@@ -194,7 +194,8 @@ module.exports = grammar({
           "diverged",
           ","
         ),
-        seq("HEAD", "detached", "at", $.commit)
+        // # HEAD detached at upstream/gh-pages
+        seq("HEAD", "detached", "at", choice($.commit, $.branch))
       ),
 
     header: ($) => seq(choice("Conflicts", seq("Untracked", "files")), ":"),

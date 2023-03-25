@@ -175,7 +175,11 @@
             },
             {
               "type": "PATTERN",
-              "value": "[^\\s]+"
+              "value": "[^\\s#]+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\s+"
             }
           ]
         },
@@ -213,11 +217,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "STRING",
-            "value": "#"
-          }
+          "type": "STRING",
+          "value": "#"
         },
         {
           "type": "CHOICE",
@@ -937,8 +938,17 @@
               "value": "at"
             },
             {
-              "type": "SYMBOL",
-              "name": "commit"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "commit"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "branch"
+                }
+              ]
             }
           ]
         }

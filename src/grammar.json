@@ -43,8 +43,11 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_newline"
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_newline"
+              }
             },
             {
               "type": "BLANK"
@@ -120,7 +123,7 @@
       ]
     },
     "_body_line": {
-      "type": "PREC_LEFT",
+      "type": "PREC_RIGHT",
       "value": 1,
       "content": {
         "type": "SEQ",
@@ -196,6 +199,10 @@
                   "name": "user"
                 },
                 {
+                  "type": "SYMBOL",
+                  "name": "commit"
+                },
+                {
                   "type": "PATTERN",
                   "value": "[^\\s#]+"
                 }
@@ -222,6 +229,10 @@
         {
           "type": "SYMBOL",
           "name": "item"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "commit"
         },
         {
           "type": "SYMBOL",
@@ -309,49 +320,49 @@
       ]
     },
     "trailer": {
-      "type": "PREC_LEFT",
-      "value": 17,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "FIELD",
-            "name": "key",
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_word"
+          }
+        },
+        {
+          "type": "PATTERN",
+          "value": "[:=]"
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "REPEAT1",
             "content": {
-              "type": "SYMBOL",
-              "name": "_word"
-            }
-          },
-          {
-            "type": "PATTERN",
-            "value": "[:=]"
-          },
-          {
-            "type": "FIELD",
-            "name": "value",
-            "content": {
-              "type": "REPEAT1",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "user"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "item"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_word"
-                  }
-                ]
-              }
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "user"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "item"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "commit"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_word"
+                }
+              ]
             }
           }
-        ]
-      }
+        }
+      ]
     },
     "_rebase_summary": {
       "type": "SEQ",
@@ -1145,16 +1156,36 @@
       "type": "PATTERN",
       "value": "[a-f0-9]{7,40}"
     },
-    "_word": {
+    "_non_punctuated_word": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": -1,
+        "value": 0,
         "content": {
           "type": "PATTERN",
-          "value": "\\S+"
+          "value": "[-\\w]+"
         }
       }
+    },
+    "_word": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_non_punctuated_word"
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": -1,
+            "content": {
+              "type": "PATTERN",
+              "value": "\\S+"
+            }
+          }
+        }
+      ]
     },
     "branch": {
       "type": "PATTERN",
@@ -1238,7 +1269,7 @@
         "value": 11,
         "content": {
           "type": "PATTERN",
-          "value": "@[^\\s@]+"
+          "value": "@[a-zA-Z0-9_-]+"
         }
       }
     },

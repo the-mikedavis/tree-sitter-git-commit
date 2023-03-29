@@ -1,5 +1,10 @@
 [
   {
+    "type": "branch",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "change",
     "named": true,
     "fields": {
@@ -73,6 +78,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "commit",
+          "named": true
+        },
         {
           "type": "item",
           "named": true
@@ -173,6 +182,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "commit",
+            "named": true
+          },
           {
             "type": "item",
             "named": true
@@ -292,10 +305,6 @@
   {
     "type": "branch",
     "named": false
-  },
-  {
-    "type": "branch",
-    "named": true
   },
   {
     "type": "by",

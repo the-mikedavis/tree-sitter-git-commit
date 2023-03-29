@@ -33,17 +33,13 @@ module.exports = grammar({
   name: "git_commit",
 
   extras: ($) => [WHITE_SPACE],
-  conflicts: ($) => [[$.message, $.trailer]],
   rules: {
     source: ($) =>
       seq(
-        optional(choice($.comment, $.subject)),
-        optional(
-          seq(
-            $._newline,
-            optional(seq(repeat($._body_line), repeat($.trailer)))
-          )
-        ),
+        optional(choice($.subject, $.comment)),
+        repeat($._body_line),
+        repeat($._trailer),
+        optional($._newline),
         optional(
           seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
         )
@@ -59,8 +55,8 @@ module.exports = grammar({
       ),
 
     _body_line: ($) =>
-      prec.right(1, seq(optional(choice($.message, $.comment)), $._newline)),
-
+      prec.left(1, seq($._newline, optional(choice($.message, $.comment)))),
+    _trailer: ($) => seq($._newline, $.trailer),
     /**
      * Non-comment body
      */

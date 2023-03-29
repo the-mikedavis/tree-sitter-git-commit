@@ -22,8 +22,6 @@ const PREC = {
   ITEM: 10,
   USER: 11,
   SUBJECT_FIRST_CHAR: 15,
-  SUBJECT: 16,
-  TRAILER: 17,
 };
 
 const SCISSORS =

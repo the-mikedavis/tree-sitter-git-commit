@@ -39,7 +39,7 @@ module.exports = grammar({
         optional(choice($.subject, $.comment)),
         repeat($._body_line),
         repeat($._trailer),
-        optional($._newline),
+        optional(repeat1($._newline)),
         optional(
           seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
         )
@@ -55,7 +55,7 @@ module.exports = grammar({
       ),
 
     _body_line: ($) =>
-      prec.left(1, seq($._newline, optional(choice($.message, $.comment)))),
+      prec.right(1, seq($._newline, optional(choice($.message, $.comment)))),
     _trailer: ($) => seq($._newline, $.trailer),
     /**
      * Non-comment body
@@ -65,10 +65,10 @@ module.exports = grammar({
         // Lines starting with spaces are certainly messages and may start with any characters.
         seq(WHITE_SPACE, repeat($._text)),
         // Otherwise message lines must not start with '#'.
-        seq(choice($.user, /[^\s#]+/), repeat($._text))
+        seq(choice($.user, $.commit, /[^\s#]+/), repeat($._text))
       ),
 
-    _text: ($) => choice($.user, $.item, $._word),
+    _text: ($) => choice($.user, $.item, $.commit, $._word),
 
     comment: ($) => seq("#", optional($._comment_body)),
 
@@ -86,13 +86,10 @@ module.exports = grammar({
      * on the format, see https://git-scm.com/docs/git-interpret-trailers
      */
     trailer: ($) =>
-      prec.left(
-        PREC.TRAILER,
-        seq(
-          field("key", $._word),
-          /[:=]/,
-          field("value", repeat1(choice($.user, $.item, $._word)))
-        )
+      seq(
+        field("key", $._word),
+        /[:=]/,
+        field("value", repeat1(choice($.user, $.item, $.commit, $._word)))
       ),
     comment: ($) =>
       prec.right(
@@ -242,8 +239,9 @@ module.exports = grammar({
       ),
 
     commit: ($) => /[a-f0-9]{7,40}/,
-
-    _word: ($) => token(prec(PREC.NONSENSE, /\S+/)),
+    _non_punctuated_word: ($) => token(prec(0, /[-\w]+/)),
+    _word: ($) =>
+      choice($._non_punctuated_word, token(prec(PREC.NONSENSE, /\S+/))),
     /**
      * For most of the details on branch name constraints, see https://git-scm.com/docs/git-check-ref-format
      */
@@ -268,7 +266,7 @@ module.exports = grammar({
 
     path: ($) => repeat1(token(prec(PREC.PATH, /\S+/))),
 
-    user: ($) => token(prec(PREC.USER, /@[^\s@]+/)),
+    user: ($) => token(prec(PREC.USER, /@[a-zA-Z0-9_-]+/)),
     /** a github-style issue or PR reference */
     item: ($) => token(prec(PREC.ITEM, /#\d+/)),
 

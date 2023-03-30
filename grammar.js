@@ -35,14 +35,13 @@ module.exports = grammar({
     source: ($) =>
       seq(
         optional(choice($.comment, $.subject)),
-        optional(seq(NEWLINE, repeat($._body_line))),
+        repeat($._body_line),
         optional(
           seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
         )
       ),
 
-    _body_line: ($) =>
-      choice(seq($.message, NEWLINE), seq($.comment, NEWLINE), NEWLINE),
+    _body_line: ($) => seq(/[\r\n]+/, optional(choice($.message, $.comment))),
 
     subject: ($) =>
       seq(
@@ -51,11 +50,14 @@ module.exports = grammar({
       ),
 
     message: ($) =>
-      seq(
-        repeat(WHITE_SPACE),
-        choice($.user, /[^\s#]+/, /\s+/),
-        repeat(choice($.user, $.item, $._word))
+      choice(
+        // Lines starting with spaces are certainly messages and may start with any characters.
+        seq(WHITE_SPACE, repeat($._text)),
+        // Otherwise message lines must not start with '#'.
+        seq(choice($.user, /[^\s#]+/), repeat($._text))
       ),
+
+    _text: ($) => choice($.user, $.item, $._word),
 
     comment: ($) => seq("#", optional($._comment_body)),
 

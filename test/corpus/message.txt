@@ -90,8 +90,7 @@ closes #123
 (source
   (subject)
   (message
-    (item))
-  (MISSING "source_token1"))
+    (item)))
 
 ================================================================================
 Body messages interspersed with comments

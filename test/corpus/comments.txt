@@ -308,3 +308,17 @@ Title
 (source
   (subject)
   (comment))
+
+================================================================================
+Comment without separating space with extra newline
+================================================================================
+Title
+
+
+#This case failed in the past because of bad handling of multiple newlines
+
+--------------------------------------------------------------------------------
+
+(source
+  (subject)
+  (comment))

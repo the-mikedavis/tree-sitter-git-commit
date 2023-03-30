@@ -47,14 +47,14 @@ module.exports = grammar({
     subject: ($) =>
       seq(
         token(prec(PREC.SUBJECT_FIRST_CHAR, /[^#\r\n]/)),
-        optional(repeat(/[^\r\n]+/))
+        repeat(/[^\r\n]+/)
       ),
 
     message: ($) =>
       seq(
         repeat(WHITE_SPACE),
         choice($.user, /[^\s#]+/, /\s+/),
-        optional(repeat(choice($.user, $.item, $._word)))
+        repeat(choice($.user, $.item, $._word))
       ),
 
     comment: ($) => seq("#", optional($._comment_body)),

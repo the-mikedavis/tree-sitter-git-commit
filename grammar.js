@@ -9,7 +9,6 @@
  */
 
 const WHITE_SPACE = /[\t\f\v ]+/;
-const NEWLINE = /\r?\n/;
 const ANYTHING = /[^\n\r]+/;
 const CHANGE = choice("new file", "modified", "renamed", "deleted");
 const PREC = {
@@ -80,12 +79,12 @@ module.exports = grammar({
           ";",
           "onto",
           $.commit,
-          NEWLINE
+          $._newline
         ),
-        seq("#", alias($._rebase_header, $.header), NEWLINE),
-        repeat(seq("#", $.rebase_command, NEWLINE)),
-        seq("#", alias($._rebase_header, $.header), NEWLINE),
-        repeat(seq("#", $.rebase_command, NEWLINE)),
+        seq("#", alias($._rebase_header, $.header), $._newline),
+        repeat(seq("#", $.rebase_command, $._newline)),
+        seq("#", alias($._rebase_header, $.header), $._newline),
+        repeat(seq("#", $.rebase_command, $._newline)),
         seq(
           "#",
           "You",
@@ -103,7 +102,7 @@ module.exports = grammar({
           "'",
           "."
         ),
-        NEWLINE,
+        $._newline,
         optional("#")
       ),
 
@@ -139,14 +138,14 @@ module.exports = grammar({
       choice(
         seq(
           alias($._change_header, $.header),
-          NEWLINE,
-          repeat1(seq("#", $.change, NEWLINE)),
+          $._newline,
+          repeat1(seq("#", $.change, $._newline)),
           optional("#")
         ),
         seq(
           $.header,
-          NEWLINE,
-          repeat1(seq("#", $.path, NEWLINE)),
+          $._newline,
+          repeat1(seq("#", $.path, $._newline)),
           optional("#")
         )
       ),
@@ -237,6 +236,7 @@ module.exports = grammar({
     user: ($) => token(prec(PREC.USER, /@[^\s@]+/)),
     item: ($) => token(prec(PREC.ITEM, /#\d+/)),
 
-    _rest: ($) => repeat1(choice(/.*/, NEWLINE)),
+    _rest: ($) => repeat1(choice(/.*/, $._newline)),
+    _newline: ($) => /\r?\n/,
   },
 });

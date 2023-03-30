@@ -10,16 +10,13 @@
 
 const WHITE_SPACE = /[\t\f\v ]+/;
 const ANYTHING = /[^\n\r]+/;
-const CHANGE = choice("new file", "modified", "renamed", "deleted");
 const PREC = {
   NONSENSE: -1,
   PATH: 5,
   PATH_SEPARATOR_ARROW: 6,
-  REBASE_COMMAND: 7,
   ITEM: 10,
   USER: 11,
-  SUBJECT_FIRST_CHAR: 15,
-  SUBJECT: 16,
+  SUBJECT: 15,
 };
 
 const SCISSORS =
@@ -43,10 +40,7 @@ module.exports = grammar({
     _body_line: ($) => seq(/[\r\n]+/, optional(choice($.message, $.comment))),
 
     subject: ($) =>
-      seq(
-        token(prec(PREC.SUBJECT_FIRST_CHAR, /[^#\r\n]/)),
-        repeat(/[^\r\n]+/)
-      ),
+      seq(token(prec(PREC.SUBJECT, /[^#\r\n]/)), repeat(ANYTHING)),
 
     message: ($) =>
       choice(
@@ -203,7 +197,7 @@ module.exports = grammar({
 
     change: ($) =>
       seq(
-        field("kind", CHANGE),
+        field("kind", choice("new file", "modified", "renamed", "deleted")),
         ":",
         $.path,
         optional(seq(token(prec(PREC.PATH_SEPARATOR_ARROW, "->")), $.path))

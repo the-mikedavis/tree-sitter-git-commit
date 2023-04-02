@@ -197,13 +197,21 @@ module.exports = grammar({
       choice(
         seq("On", "branch", alias($._word, $.branch)),
         seq(
-          ..."Your branch is up to date with".split(" "),
+          "Your",
+          "branch",
+          "is",
+          "up",
+          "to",
+          "date",
+          "with",
           "'",
           $.branch,
           "'."
         ),
         seq(
-          ..."Your branch is".split(" "),
+          "Your",
+          "branch",
+          "is",
           choice(seq("ahead", "of"), "behind"),
           "'",
           $.branch,
@@ -214,7 +222,9 @@ module.exports = grammar({
           "."
         ),
         seq(
-          ..."Your branch and".split(" "),
+          "Your",
+          "branch",
+          "and",
           "'",
           $.branch,
           "'",

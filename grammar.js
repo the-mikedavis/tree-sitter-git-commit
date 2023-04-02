@@ -15,13 +15,25 @@
  */
 const WHITE_SPACE = /[\t\f\v ]+/;
 const ANYTHING = /[^\n\r]+/;
-const PREC = {
+
+// see https://tree-sitter.github.io/tree-sitter/creating-parsers#lexical-precedence-vs-parse-precedence
+const PARSE_PRECEDENCE = {
   NONSENSE: -1,
-  PATH: 5,
-  PATH_SEPARATOR_ARROW: 6,
-  ITEM: 10,
-  USER: 11,
-  SUBJECT_FIRST_CHAR: 15,
+  BODY_LINE: 1,
+  COMMENT: 2,
+  TRAILERS: 3,
+};
+const LEXICAL_PRECEDENCE = {
+  ANY_WORD: -3,
+  NONSENSE: -2,
+  NON_PUNCTUATED_WORD: -1,
+  // string literals and RegExes not decorated with `prec(LEXICAL_PRECEDENCE._)`
+  // have precedence 0.
+  PATH: 1,
+  PATH_SEPARATOR_ARROW: 2,
+  ITEM: 3,
+  USER: 4,
+  SUBJECT_FIRST_CHAR: 5,
 };
 
 const SCISSORS =
@@ -48,13 +60,20 @@ module.exports = grammar({
      */
     subject: ($) =>
       seq(
-        prec(PREC.SUBJECT_FIRST_CHAR, token.immediate(/[^#\r\n]/)),
+        prec(
+          LEXICAL_PRECEDENCE.SUBJECT_FIRST_CHAR,
+          token.immediate(/[^#\r\n]/)
+        ),
         repeat(ANYTHING)
       ),
 
     _body_line: ($) =>
-      prec.right(1, seq($._newline, optional(choice($.message, $.comment)))),
-    _trailer: ($) => seq($._newline, $.trailer),
+      prec.right(
+        PARSE_PRECEDENCE.BODY_LINE,
+        seq($._newline, optional(choice($.message, $.comment)))
+      ),
+    _trailer: ($) =>
+      prec(PARSE_PRECEDENCE.TRAILERS, seq($._newline, $.trailer)),
     /**
      * Non-comment body
      */
@@ -63,12 +82,20 @@ module.exports = grammar({
         // Lines starting with spaces are certainly messages and may start with any characters.
         seq(WHITE_SPACE, repeat($._text)),
         // Otherwise message lines must not start with '#'.
-        seq(choice($.user, $.commit, /[^\s#]+/), repeat($._text))
+        seq(
+          choice($.user, $.commit, $._non_punctuated_word, $._non_comment),
+          repeat($._text)
+        )
       ),
 
     _text: ($) => choice($.user, $.item, $.commit, $._word),
 
-    comment: ($) => seq("#", optional($._comment_body)),
+    comment: ($) =>
+      seq(
+        /#/, // needs to be a regex (a token with precedence 0) to prevent lexing
+        // conflicts with /\S+/ words
+        optional($._comment_body)
+      ),
 
     _comment_body: ($) =>
       choice(
@@ -91,7 +118,7 @@ module.exports = grammar({
       ),
     comment: ($) =>
       prec.right(
-        1,
+        PARSE_PRECEDENCE.COMMENT,
         seq(
           "#",
           optional(
@@ -243,13 +270,24 @@ module.exports = grammar({
         field("kind", choice("new file", "modified", "renamed", "deleted")),
         ":",
         $.path,
-        optional(seq(token(prec(PREC.PATH_SEPARATOR_ARROW, "->")), $.path))
+        optional(
+          seq(
+            token(prec(LEXICAL_PRECEDENCE.PATH_SEPARATOR_ARROW, "->")),
+            $.path
+          )
+        )
       ),
 
     commit: ($) => /[a-f0-9]{7,40}/,
-    _non_punctuated_word: ($) => token(prec(0, /[-\w]+/)),
+    _non_punctuated_word: ($) =>
+      token(prec(LEXICAL_PRECEDENCE.NON_PUNCTUATED_WORD, /[-\w]+/)),
+    _non_comment: ($) => token(prec(LEXICAL_PRECEDENCE.NONSENSE, /[^#\s]+/)),
+    _any_word: ($) => token(prec(LEXICAL_PRECEDENCE.ANY_WORD, /\S+/)),
     _word: ($) =>
-      choice($._non_punctuated_word, token(prec(PREC.NONSENSE, /\S+/))),
+      prec(
+        PARSE_PRECEDENCE.NONSENSE,
+        choice($._non_punctuated_word, $._non_comment, $._any_word)
+      ),
     /**
      * For most of the details on branch name constraints, see https://git-scm.com/docs/git-check-ref-format
      */
@@ -272,11 +310,11 @@ module.exports = grammar({
         repeat1(/\S+/)
       ),
 
-    path: ($) => repeat1(token(prec(PREC.PATH, /\S+/))),
-
-    user: ($) => token(prec(PREC.USER, /@[a-zA-Z0-9_-]+/)),
+    path: ($) => repeat1(token(prec(LEXICAL_PRECEDENCE.PATH, /\S+/))),
     /** a github-style issue or PR reference */
-    item: ($) => token(prec(PREC.ITEM, /#\d+/)),
+    item: ($) => token(prec(LEXICAL_PRECEDENCE.ITEM, /#\d+/)),
+
+    user: ($) => token(prec(LEXICAL_PRECEDENCE.USER, /@[a-zA-Z0-9_-]+/)),
 
     _rest: ($) => repeat1(choice(/.*/, $._newline)),
   },

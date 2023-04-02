@@ -113,7 +113,7 @@ module.exports = grammar({
     trailer: ($) =>
       seq(
         field("key", $._word),
-        /[:=]/,
+        field("separator", choice(":", "=")),
         field("value", repeat1(choice($.user, $.item, $.commit, $._word)))
       ),
     comment: ($) =>

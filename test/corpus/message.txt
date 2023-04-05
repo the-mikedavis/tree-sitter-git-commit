@@ -203,6 +203,7 @@ Signed-off-by: Alice <alice@example.com>
 Signed-off-by: Bob <bob@example.com>
 
 --------------------------------------------------------------------------------
+
 (source
   (subject)
   (message)
@@ -219,6 +220,7 @@ message
 Signed-off-by: Bob <bob@example.com>
 Acked-by: Alice <alice@example.com>
 --------------------------------------------------------------------------------
+
 (source
   (subject)
   (message)
@@ -234,10 +236,12 @@ message
 
 Reference-to: 8bc9a0c769 (Add copyright notices., 2005-04-07)
 --------------------------------------------------------------------------------
+
 (source
   (subject)
   (message)
-  (trailer (commit)))
+  (trailer
+    (commit)))
 
 ================================================================================
 Trailer with user-mention
@@ -248,11 +252,12 @@ message
 
 Thanks-to: @user
 --------------------------------------------------------------------------------
+
 (source
   (subject)
   (message)
-  (trailer (user)))
-
+  (trailer
+    (user)))
 
 ================================================================================
 Trailer with issue-mention
@@ -263,7 +268,9 @@ message
 
 Fixes: #123
 --------------------------------------------------------------------------------
+
 (source
   (subject)
   (message)
-  (trailer (item)))
+  (trailer
+    (item)))

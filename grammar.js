@@ -46,10 +46,10 @@ module.exports = grammar({
   rules: {
     source: ($) =>
       seq(
-        optional(choice($.subject, $.comment)),
+        optional(choice($.comment, $.subject)),
         repeat($._body_line),
         repeat($._trailer),
-        optional(repeat1($._newline)),
+        repeat($._newline),
         optional(
           seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
         )
@@ -58,22 +58,17 @@ module.exports = grammar({
     /**
      * The subject of the commit message: the first line.
      */
-    subject: ($) =>
-      seq(
-        prec(
-          LEXICAL_PRECEDENCE.SUBJECT_FIRST_CHAR,
-          token.immediate(/[^#\r\n]/)
-        ),
-        repeat(ANYTHING)
-      ),
+    subject: ($) => seq(/[^#\r\n]/, repeat(ANYTHING)),
 
     _body_line: ($) =>
       prec.right(
         PARSE_PRECEDENCE.BODY_LINE,
         seq($._newline, optional(choice($.message, $.comment)))
       ),
+
     _trailer: ($) =>
       prec(PARSE_PRECEDENCE.TRAILERS, seq($._newline, $.trailer)),
+
     /**
      * Non-comment body
      */
@@ -90,12 +85,7 @@ module.exports = grammar({
 
     _text: ($) => choice($.user, $.item, $.commit, $._word),
 
-    comment: ($) =>
-      seq(
-        /#/, // needs to be a regex (a token with precedence 0) to prevent lexing
-        // conflicts with /\S+/ words
-        optional($._comment_body)
-      ),
+    comment: ($) => seq("#", optional($._comment_body)),
 
     _comment_body: ($) =>
       choice(
@@ -105,6 +95,7 @@ module.exports = grammar({
         // fallback to regular comment words if the words are nonsense
         repeat1($._word)
       ),
+
     /**
      * Trailers are "lines that look similar to RFC 822 e-mail headers at the
      * end of the otherwise free-form part of a commit message." For more details
@@ -115,22 +106,6 @@ module.exports = grammar({
         field("key", $._word),
         field("separator", choice(":", "=")),
         field("value", repeat1(choice($.user, $.item, $.commit, $._word)))
-      ),
-    comment: ($) =>
-      prec.right(
-        PARSE_PRECEDENCE.COMMENT,
-        seq(
-          "#",
-          optional(
-            choice(
-              alias($._rebase_summary, $.summary),
-              $.summary,
-              $._branch_declaration,
-              // fallback to regular comment words if the words are nonsense
-              repeat1($._word)
-            )
-          )
-        )
       ),
 
     _rebase_summary: ($) =>
@@ -279,6 +254,7 @@ module.exports = grammar({
       ),
 
     commit: ($) => /[a-f0-9]{7,40}/,
+
     _non_punctuated_word: ($) =>
       token(prec(LEXICAL_PRECEDENCE.NON_PUNCTUATED_WORD, /[-\w]+/)),
     _non_comment: ($) => token(prec(LEXICAL_PRECEDENCE.NONSENSE, /[^#\s]+/)),

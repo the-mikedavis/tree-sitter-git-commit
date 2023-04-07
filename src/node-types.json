@@ -178,6 +178,20 @@
     "type": "trailer",
     "named": true,
     "fields": {
+      "separator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "=",
+            "named": false
+          }
+        ]
+      },
       "value": {
         "multiple": true,
         "required": false,
@@ -236,6 +250,10 @@
   },
   {
     "type": ";",
+    "named": false
+  },
+  {
+    "type": "=",
     "named": false
   },
   {
@@ -316,11 +334,11 @@
   },
   {
     "type": "commit",
-    "named": true
+    "named": false
   },
   {
     "type": "commit",
-    "named": false
+    "named": true
   },
   {
     "type": "committed",

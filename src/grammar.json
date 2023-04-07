@@ -12,11 +12,11 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "subject"
+                  "name": "comment"
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "comment"
+                  "name": "subject"
                 }
               ]
             },
@@ -40,19 +40,11 @@
           }
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "REPEAT1",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_newline"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_newline"
+          }
         },
         {
           "type": "CHOICE",
@@ -103,15 +95,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PREC",
-          "value": 15,
-          "content": {
-            "type": "IMMEDIATE_TOKEN",
-            "content": {
-              "type": "PATTERN",
-              "value": "[^#\\r\\n]"
-            }
-          }
+          "type": "PATTERN",
+          "value": "[^#\\r\\n]"
         },
         {
           "type": "REPEAT",
@@ -157,17 +142,21 @@
       }
     },
     "_trailer": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_newline"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "trailer"
-        }
-      ]
+      "type": "PREC",
+      "value": 3,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_newline"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "trailer"
+          }
+        ]
+      }
     },
     "message": {
       "type": "CHOICE",
@@ -203,8 +192,12 @@
                   "name": "commit"
                 },
                 {
-                  "type": "PATTERN",
-                  "value": "[^\\s#]+"
+                  "type": "SYMBOL",
+                  "name": "_non_punctuated_word"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_non_comment"
                 }
               ]
             },
@@ -241,54 +234,25 @@
       ]
     },
     "comment": {
-      "type": "PREC_RIGHT",
-      "value": 1,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "#"
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "_rebase_summary"
-                    },
-                    "named": true,
-                    "value": "summary"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "summary"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_branch_declaration"
-                  },
-                  {
-                    "type": "REPEAT1",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "_word"
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          }
-        ]
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_comment_body"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "_comment_body": {
       "type": "CHOICE",
@@ -331,8 +295,21 @@
           }
         },
         {
-          "type": "PATTERN",
-          "value": "[:=]"
+          "type": "FIELD",
+          "name": "separator",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ":"
+              },
+              {
+                "type": "STRING",
+                "value": "="
+              }
+            ]
+          }
         },
         {
           "type": "FIELD",
@@ -1132,7 +1109,7 @@
                   "type": "TOKEN",
                   "content": {
                     "type": "PREC",
-                    "value": 6,
+                    "value": 2,
                     "content": {
                       "type": "STRING",
                       "value": "->"
@@ -1160,32 +1137,55 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 0,
+        "value": -1,
         "content": {
           "type": "PATTERN",
           "value": "[-\\w]+"
         }
       }
     },
-    "_word": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_non_punctuated_word"
-        },
-        {
-          "type": "TOKEN",
-          "content": {
-            "type": "PREC",
-            "value": -1,
-            "content": {
-              "type": "PATTERN",
-              "value": "\\S+"
-            }
-          }
+    "_non_comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -2,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^#\\s]+"
         }
-      ]
+      }
+    },
+    "_any_word": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -3,
+        "content": {
+          "type": "PATTERN",
+          "value": "\\S+"
+        }
+      }
+    },
+    "_word": {
+      "type": "PREC",
+      "value": -1,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_non_punctuated_word"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_non_comment"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_any_word"
+          }
+        ]
+      }
     },
     "branch": {
       "type": "PATTERN",
@@ -1254,7 +1254,7 @@
         "type": "TOKEN",
         "content": {
           "type": "PREC",
-          "value": 5,
+          "value": 1,
           "content": {
             "type": "PATTERN",
             "value": "\\S+"
@@ -1262,25 +1262,25 @@
         }
       }
     },
-    "user": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PREC",
-        "value": 11,
-        "content": {
-          "type": "PATTERN",
-          "value": "@[a-zA-Z0-9_-]+"
-        }
-      }
-    },
     "item": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 10,
+        "value": 3,
         "content": {
           "type": "PATTERN",
           "value": "#\\d+"
+        }
+      }
+    },
+    "user": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 4,
+        "content": {
+          "type": "PATTERN",
+          "value": "@[a-zA-Z0-9_-]+"
         }
       }
     },

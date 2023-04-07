@@ -207,8 +207,12 @@ Signed-off-by: Bob <bob@example.com>
 (source
   (subject)
   (message)
-  (trailer)
-  (trailer))
+  (trailer
+    (trailer_key)
+    (trailer_value))
+  (trailer
+    (trailer_key)
+    (trailer_value)))
 
 ================================================================================
 Another basic trailer
@@ -224,8 +228,12 @@ Acked-by: Alice <alice@example.com>
 (source
   (subject)
   (message)
-  (trailer)
-  (trailer))
+  (trailer
+    (trailer_key)
+    (trailer_value))
+  (trailer
+    (trailer_key)
+    (trailer_value)))
 
 ================================================================================
 Trailer with commit
@@ -241,7 +249,9 @@ Reference-to: 8bc9a0c769 (Add copyright notices., 2005-04-07)
   (subject)
   (message)
   (trailer
-    (commit)))
+    (trailer_key)
+    (trailer_value
+      (commit))))
 
 ================================================================================
 Trailer with user-mention
@@ -257,7 +267,9 @@ Thanks-to: @user
   (subject)
   (message)
   (trailer
-    (user)))
+    (trailer_key)
+    (trailer_value
+      (user))))
 
 ================================================================================
 Trailer with issue-mention
@@ -273,7 +285,9 @@ Fixes: #123
   (subject)
   (message)
   (trailer
-    (item)))
+    (trailer_key)
+    (trailer_value
+      (item))))
 
 ================================================================================
 Trailer followed by a comment
@@ -287,5 +301,7 @@ Fixes: #123
 (source
   (subject)
   (trailer
-    (item))
+    (trailer_key)
+    (trailer_value
+      (item)))
   (comment))

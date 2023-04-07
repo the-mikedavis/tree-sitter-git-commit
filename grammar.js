@@ -104,10 +104,13 @@ module.exports = grammar({
      */
     trailer: ($) =>
       seq(
-        field("key", $._word),
+        field("key", $.trailer_key),
         field("separator", choice(":", "=")),
-        field("value", repeat1(choice($.user, $.item, $.commit, $._word)))
+        field("value", $.trailer_value)
       ),
+
+    trailer_key: ($) => $._word,
+    trailer_value: ($) => repeat1(choice($.user, $.item, $.commit, $._word)),
 
     _rebase_summary: ($) =>
       seq(

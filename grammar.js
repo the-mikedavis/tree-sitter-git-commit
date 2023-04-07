@@ -43,6 +43,7 @@ module.exports = grammar({
   name: "git_commit",
 
   extras: ($) => [WHITE_SPACE],
+
   rules: {
     source: ($) =>
       seq(
@@ -54,7 +55,7 @@ module.exports = grammar({
           seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
         )
       ),
-    _newline: ($) => /\r?\n/,
+
     /**
      * The subject of the commit message: the first line.
      */
@@ -293,5 +294,6 @@ module.exports = grammar({
     user: ($) => token(prec(LEXICAL_PRECEDENCE.USER, /@[a-zA-Z0-9_-]+/)),
 
     _rest: ($) => repeat1(choice(/.*/, $._newline)),
+    _newline: ($) => /\r?\n/,
   },
 });

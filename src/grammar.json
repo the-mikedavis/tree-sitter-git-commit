@@ -42,8 +42,25 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "_newline"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_newline"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "comment"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
           }
         },
         {
@@ -86,10 +103,6 @@
           ]
         }
       ]
-    },
-    "_newline": {
-      "type": "PATTERN",
-      "value": "\\r?\\n"
     },
     "subject": {
       "type": "SEQ",
@@ -291,7 +304,7 @@
           "name": "key",
           "content": {
             "type": "SYMBOL",
-            "name": "_word"
+            "name": "trailer_key"
           }
         },
         {
@@ -315,31 +328,39 @@
           "type": "FIELD",
           "name": "value",
           "content": {
-            "type": "REPEAT1",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "user"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "item"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "commit"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_word"
-                }
-              ]
-            }
+            "type": "SYMBOL",
+            "name": "trailer_value"
           }
         }
       ]
+    },
+    "trailer_key": {
+      "type": "SYMBOL",
+      "name": "_word"
+    },
+    "trailer_value": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "user"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "item"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "commit"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_word"
+          }
+        ]
+      }
     },
     "_rebase_summary": {
       "type": "SEQ",
@@ -1299,6 +1320,10 @@
           }
         ]
       }
+    },
+    "_newline": {
+      "type": "PATTERN",
+      "value": "\\r?\\n"
     }
   },
   "extras": [

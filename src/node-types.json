@@ -178,6 +178,16 @@
     "type": "trailer",
     "named": true,
     "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "trailer_key",
+            "named": true
+          }
+        ]
+      },
       "separator": {
         "multiple": false,
         "required": true,
@@ -193,23 +203,43 @@
         ]
       },
       "value": {
-        "multiple": true,
-        "required": false,
+        "multiple": false,
+        "required": true,
         "types": [
           {
-            "type": "commit",
-            "named": true
-          },
-          {
-            "type": "item",
-            "named": true
-          },
-          {
-            "type": "user",
+            "type": "trailer_value",
             "named": true
           }
         ]
       }
+    }
+  },
+  {
+    "type": "trailer_key",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "trailer_value",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "commit",
+          "named": true
+        },
+        {
+          "type": "item",
+          "named": true
+        },
+        {
+          "type": "user",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -334,11 +364,11 @@
   },
   {
     "type": "commit",
-    "named": false
+    "named": true
   },
   {
     "type": "commit",
-    "named": true
+    "named": false
   },
   {
     "type": "committed",

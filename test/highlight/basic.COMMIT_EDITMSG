@@ -1,0 +1,19 @@
+This is the subject line
+# <- subject
+#    ^ subject
+#           ^ subject
+
+This is a message in the body
+# <- message
+#  ^ message
+#          ^ message
+
+Here's a commit: deadbeef
+# <- message
+#                 ^ commit
+
+Signed-off-by: me!
+# <- trailer.key
+#     ^ trailer.key
+#            ^ punctuation.delimiter
+#              ^ trailer.value

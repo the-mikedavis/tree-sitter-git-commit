@@ -50,7 +50,7 @@ module.exports = grammar({
         optional(choice($.comment, $.subject)),
         repeat($._body_line),
         repeat($._trailer),
-        repeat($._newline),
+        repeat(seq($._newline, optional($.comment))),
         optional(
           seq(alias(SCISSORS, $.scissors), optional(alias($._rest, $.message)))
         )

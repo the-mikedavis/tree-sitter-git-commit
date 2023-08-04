@@ -858,13 +858,8 @@
               "value": "branch"
             },
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_word"
-              },
-              "named": true,
-              "value": "branch"
+              "type": "SYMBOL",
+              "name": "branch"
             }
           ]
         },

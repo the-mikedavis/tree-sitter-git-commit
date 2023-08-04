@@ -1,10 +1,5 @@
 [
   {
-    "type": "branch",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "change",
     "named": true,
     "fields": {
@@ -353,6 +348,10 @@
   {
     "type": "branch",
     "named": false
+  },
+  {
+    "type": "branch",
+    "named": true
   },
   {
     "type": "by",

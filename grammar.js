@@ -201,7 +201,7 @@ module.exports = grammar({
 
     _branch_declaration: ($) =>
       choice(
-        seq("On", "branch", alias($._word, $.branch)),
+        seq("On", "branch", $.branch),
         seq(
           "Your",
           "branch",

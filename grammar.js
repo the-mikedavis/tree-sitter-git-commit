@@ -15,6 +15,9 @@
  */
 const WHITE_SPACE = /[\t\f\v ]+/;
 const ANYTHING = /[^\n\r]+/;
+const COMMENT = /[#;@!$%^&|:]/;
+const SCISSORS =
+  /[#;@!$%^&|:] -+ >8 -+\r?\n[#;@!$%^&|:] Do not modify or remove the line above.\r?\n[#;@!$%^&|:] Everything below it will be ignored.\r?\n?/;
 
 // see https://tree-sitter.github.io/tree-sitter/creating-parsers#lexical-precedence-vs-parse-precedence
 const PARSE_PRECEDENCE = {
@@ -36,9 +39,6 @@ const LEXICAL_PRECEDENCE = {
   SUBJECT_FIRST_CHAR: 5,
 };
 
-const SCISSORS =
-  /# -+ >8 -+\r?\n# Do not modify or remove the line above.\r?\n# Everything below it will be ignored.\r?\n?/;
-
 module.exports = grammar({
   name: "git_commit",
 
@@ -59,7 +59,7 @@ module.exports = grammar({
     /**
      * The subject of the commit message: the first line.
      */
-    subject: ($) => seq(/[^#\r\n]/, repeat(ANYTHING)),
+    subject: ($) => seq(/[^#;@!$%^&|:\r\n]/, repeat(ANYTHING)),
 
     _body_line: ($) =>
       prec.right(
@@ -77,7 +77,7 @@ module.exports = grammar({
       choice(
         // Lines starting with spaces are certainly messages and may start with any characters.
         seq(WHITE_SPACE, repeat($._text)),
-        // Otherwise message lines must not start with '#'.
+        // Otherwise message lines must not start with a comment character.
         seq(
           choice($.user, $.commit, $._non_punctuated_word, $._non_comment),
           repeat($._text)
@@ -86,7 +86,7 @@ module.exports = grammar({
 
     _text: ($) => choice($.user, $.item, $.commit, $._word),
 
-    comment: ($) => seq("#", optional($._comment_body)),
+    comment: ($) => seq(COMMENT, optional($._comment_body)),
 
     _comment_body: ($) =>
       choice(
@@ -124,12 +124,12 @@ module.exports = grammar({
           $.commit,
           $._newline
         ),
-        seq("#", alias($._rebase_header, $.header), $._newline),
-        repeat(seq("#", $.rebase_command, $._newline)),
-        seq("#", alias($._rebase_header, $.header), $._newline),
-        repeat(seq("#", $.rebase_command, $._newline)),
+        seq(COMMENT, alias($._rebase_header, $.header), $._newline),
+        repeat(seq(COMMENT, $.rebase_command, $._newline)),
+        seq(COMMENT, alias($._rebase_header, $.header), $._newline),
+        repeat(seq(COMMENT, $.rebase_command, $._newline)),
         seq(
-          "#",
+          COMMENT,
           "You",
           "are",
           "currently",
@@ -146,7 +146,7 @@ module.exports = grammar({
           "."
         ),
         $._newline,
-        optional("#")
+        optional(COMMENT)
       ),
 
     _rebase_header: ($) =>
@@ -182,14 +182,14 @@ module.exports = grammar({
         seq(
           alias($._change_header, $.header),
           $._newline,
-          repeat1(seq("#", $.change, $._newline)),
-          optional("#")
+          repeat1(seq(COMMENT, $.change, $._newline)),
+          optional(COMMENT)
         ),
         seq(
           $.header,
           $._newline,
-          repeat1(seq("#", $.path, $._newline)),
-          optional("#")
+          repeat1(seq(COMMENT, $.path, $._newline)),
+          optional(COMMENT)
         )
       ),
 
@@ -261,7 +261,7 @@ module.exports = grammar({
 
     _non_punctuated_word: ($) =>
       token(prec(LEXICAL_PRECEDENCE.NON_PUNCTUATED_WORD, /[-\w]+/)),
-    _non_comment: ($) => token(prec(LEXICAL_PRECEDENCE.NONSENSE, /[^#\s]+/)),
+    _non_comment: ($) => token(prec(LEXICAL_PRECEDENCE.NONSENSE, /[^#;@!$%^&|:\s]+/)),
     _any_word: ($) => token(prec(LEXICAL_PRECEDENCE.ANY_WORD, /\S+/)),
     _word: ($) =>
       prec(

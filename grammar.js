@@ -257,7 +257,7 @@ module.exports = grammar({
         )
       ),
 
-    commit: ($) => /[a-f0-9]{7,40}/,
+    commit: ($) => /[a-f0-9]{7,40}(?!\w)/,
 
     _non_punctuated_word: ($) =>
       token(prec(LEXICAL_PRECEDENCE.NON_PUNCTUATED_WORD, /[-\w]+/)),

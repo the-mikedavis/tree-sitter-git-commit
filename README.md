@@ -1,12 +1,8 @@
 # `tree-sitter-git-commit`
 
-[![CI](https://github.com/the-mikedavis/tree-sitter-git-commit/actions/workflows/ci.yml/badge.svg)](https://github.com/the-mikedavis/tree-sitter-git-commit/actions/workflows/ci.yml)
+> NOTE: This grammar is deprecated in favor of the more featureful [gbprod/tree-sitter-gitcommit](https://github.com/gbprod/tree-sitter-gitcommit). An example change for migrating an editor to the new grammar looks like [this commit](https://github.com/helix-editor/helix/commit/44293dfd2248d82f39bb8e5b91cbb1daf2e24290).
 
 A [tree-sitter](https://tree-sitter.github.io/tree-sitter/) grammar for git commit messages.
-
-### Status
-
-Somewhat complete but needs testing and highlight queries.
 
 ### Example
 
